@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { chromium, type Browser } from "playwright";
+import type { Browser } from "playwright";
 import { browseBin, detectBlock, parseStatus, session } from "@/lib/browser/browse";
 import { normalizeUrl } from "@/lib/design/url";
 import { assertLocalEngine } from "@/lib/env";
@@ -36,6 +36,9 @@ export const VIEWPORTS = {
 export type ViewportName = keyof typeof VIEWPORTS;
 
 async function withBrowser<T>(fn: (b: Browser) => Promise<T>): Promise<T> {
+  // 정적 import 로 두면 playwright 가 모든 호출부(templateStore.ts 등)에 번들링되어
+  // Vercel 서버리스 환경에서 playwright-core 번들 로딩 자체가 실패한다 — 실제로 호출될 때만 로드한다.
+  const { chromium } = await import("playwright");
   const browser = await chromium.launch();
   try {
     return await fn(browser);
