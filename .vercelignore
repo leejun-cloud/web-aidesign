@@ -1,0 +1,7 @@
+# Vercel CLI 는 .gitignore 를 읽지 않는다 — 로컬 프로젝트 데이터(테스트 산출물 포함)가
+# 그대로 업로드/번들링되어 배포본에 노출되는 걸 막기 위해 명시적으로 제외한다.
+# seed-templates/ 는 git에 커밋된, 의도적으로 공개할 디자인 가이드 샘플이라 제외하지 않는다.
+workspace/
+coverage/
+.gstack/
+*.tsbuildinfo
