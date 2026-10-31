@@ -12,7 +12,7 @@ export async function GET(req: Request) {
     const { html } = versionParam
       ? await readVersion(projectId, Number(versionParam))
       : await latestVersion(projectId);
-    const { code, componentName } = htmlToReactComponent(html);
+    const { code, componentName } = await htmlToReactComponent(html);
     return new NextResponse(code, {
       headers: {
         "content-type": "text/plain; charset=utf-8",

@@ -605,7 +605,7 @@ export default function ProjectView({
         </section>
       )}
 
-      {/* 내보내기 — React 컴포넌트는 순수 변환(배포 환경에서도 동작), PDF 브로슈어는 로컬 전용 */}
+      {/* 내보내기 — 둘 다 jsdom/Playwright 가 Vercel 서버리스 번들링에서 깨져 로컬 전용이다 */}
       {version !== null && (
         <section className="mt-3 flex flex-wrap items-center gap-2 text-sm">
           <a
@@ -620,7 +620,7 @@ export default function ProjectView({
           >
             PDF 브로슈어로 내보내기
           </a>
-          <span className="text-xs text-zinc-400">PDF 브로슈어는 로컬 실행 환경에서만 동작합니다</span>
+          <span className="text-xs text-zinc-400">두 내보내기 모두 로컬 실행 환경(npm run dev/start)에서만 동작합니다</span>
         </section>
       )}
 

@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import { assertLocalEngine } from "@/lib/env";
 
 /** style="a: b; c: d" → React style 객체 리터럴 */
 function styleAttrToObject(value: string): string {
@@ -92,10 +92,13 @@ export interface ReactExportResult {
 
 /**
  * 생성된 전체 HTML 문서를 단일 React 컴포넌트(.tsx)로 변환한다.
- * head 의 <style> 은 컴포넌트 안으로, body 는 JSX 트리로 옮긴다.
- * AI 를 쓰지 않는 순수 코드 변환이라 배포 환경에서도 그대로 동작한다.
+ * head 의 <style> 은 컴포넌트 안으로, body 는 JSX 트리로 옮긴다. AI 는 쓰지 않는 순수 코드
+ * 변환이지만, jsdom(html-encoding-sniffer → @exodus/bytes)이 Vercel 서버리스 번들링에서
+ * ERR_REQUIRE_ESM 으로 깨져(로컬 Node 에서는 정상 동작) 현재는 로컬 전용으로 막아둔다.
  */
-export function htmlToReactComponent(html: string, componentName = "GeneratedPage"): ReactExportResult {
+export async function htmlToReactComponent(html: string, componentName = "GeneratedPage"): Promise<ReactExportResult> {
+  assertLocalEngine();
+  const { JSDOM } = await import("jsdom");
   const dom = new JSDOM(html);
   const doc = dom.window.document;
   const headStyles = Array.from(doc.querySelectorAll("head style"));
