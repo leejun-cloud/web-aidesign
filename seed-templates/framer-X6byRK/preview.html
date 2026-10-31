@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canvas — Build interfaces at the speed of thought</title>
+<style>
+  :root {
+    --color-background: #000000;
+    --color-surface: #141414;
+    --color-surface-2: #1c1c1c;
+    --color-primary: #FFFFFF;
+    --color-secondary: #9A9A9A;
+    --color-accent: #1F6FEB;
+    --color-accent-glow: rgba(31, 111, 235, 0.35);
+    --color-accent-glow-soft: rgba(31, 111, 235, 0.12);
+    --color-text: #FFFFFF;
+    --color-border: rgba(255, 255, 255, 0.1);
+    --color-border-soft: rgba(255, 255, 255, 0.06);
+    --color-chip-bg: rgba(255, 255, 255, 0.06);
+    --color-chip-bg-hover: rgba(255, 255, 255, 0.1);
+    --color-btn-secondary-bg: rgba(255, 255, 255, 0.04);
+    --color-shadow: rgba(0, 0, 0, 0.6);
+    --color-panel-grad-1: #0a0a0a;
+    --color-panel-grad-2: #141414;
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+
+    --space-section: 96px;
+    --space-content: 20px;
+    --container-max: 1360px;
+    --container-pad-desktop: 88px;
+    --container-pad-mobile: 20px;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  h1, h2, h3, p { overflow-wrap: anywhere; }
+
+  a { color: inherit; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad-mobile);
+  }
+
+  @media (min-width: 834px) {
+    .container { padding: 0 48px; }
+  }
+
+  @media (min-width: 1440px) {
+    .container { padding: 0 var(--container-pad-desktop); }
+  }
+
+  /* Header */
+  header[data-vdna-id="header"] {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border-soft);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    gap: 16px;
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+  }
+
+  .nav-links a:hover { color: var(--color-primary); }
+
+  .chevron {
+    width: 10px;
+    height: 10px;
+    opacity: 0.6;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-secondary);
+    display: none;
+  }
+
+  .btn-ghost:hover { color: var(--color-primary); }
+
+  .btn-solid {
+    background: var(--color-primary);
+    color: var(--color-background);
+  }
+
+  .btn-solid:hover { transform: translateY(-1px); }
+
+  .btn-outline {
+    background: var(--color-btn-secondary-bg);
+    color: var(--color-primary);
+    border-color: var(--color-border);
+  }
+
+  .btn-outline:hover { background: var(--color-chip-bg-hover); }
+
+  .hamburger {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 32px;
+    height: 32px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hamburger span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: var(--color-primary);
+    border-radius: 2px;
+  }
+
+  @media (min-width: 834px) {
+    .nav-links { display: flex; }
+    .btn-ghost { display: inline-flex; }
+    .hamburger { display: none; }
+  }
+
+  /* Hero */
+  section[data-vdna-id="hero"] {
+    padding-top: var(--space-section);
+    padding-bottom: var(--space-section);
+  }
+
+  .hero-copy {
+    max-width: 720px;
+    text-align: left;
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-accent);
+    background: var(--color-accent-glow-soft);
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 6px 14px;
+    margin-bottom: 24px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--color-accent);
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+  }
+
+  @media (min-width: 834px) {
+    h1 { font-size: 3.75rem; }
+  }
+
+  @media (min-width: 1440px) {
+    h1 { font-size: 4.5rem; }
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--color-secondary);
+    margin: 0 0 32px;
+    max-width: 560px;
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .cta-row .btn { padding: 13px 24px; font-size: 0.95rem; border-radius: var(--radius-sm); }
+
+  .secondary-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+  }
+
+  .secondary-link:hover {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-border);
+  }
+
+  /* Product showcase */
+  section[data-vdna-id="features"] {
+    padding-bottom: var(--space-section);
+  }
+
+  .showcase-panel {
+    position: relative;
+    background: linear-gradient(180deg, var(--color-panel-grad-1), var(--color-panel-grad-2));
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 834px) {
+    .showcase-panel { padding: 32px; }
+  }
+
+  .showcase-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60%;
+    max-width: 480px;
+    aspect-ratio: 1 / 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  .showcase-toolbar {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .chip {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-secondary);
+    background: var(--color-chip-bg);
+    border: 1px solid var(--color-border-soft);
+    border-radius: 999px;
+    padding: 6px 14px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .chip:hover,
+  .chip.active {
+    background: var(--color-chip-bg-hover);
+    color: var(--color-primary);
+  }
+
+  .showcase-media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--color-border-soft);
+    background:
+      radial-gradient(circle at 50% 45%, var(--color-accent-glow) 0%, transparent 55%),
+      linear-gradient(145deg, var(--color-surface) 0%, var(--color-background) 100%);
+  }
+
+  @media (max-width: 833px) {
+    .showcase-media { aspect-ratio: 4 / 5; }
+  }
+
+  .showcase-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Footer */
+  footer[data-vdna-id="footer"] {
+    border-top: 1px solid var(--color-border-soft);
+    padding: 48px 0;
+  }
+
+  .footer-row {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 834px) {
+    .footer-row { flex-direction: row; align-items: center; }
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: var(--color-secondary);
+    text-decoration: none;
+  }
+
+  .footer-links a:hover { color: var(--color-primary); }
+
+  .footer-note {
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+  }
+</style>
+</head>
+<body>
+
+  <header data-vdna-id="header">
+    <div class="container">
+      <nav class="nav">
+        <div class="nav-left">
+          <a class="logo" href="#">Canvas</a>
+          <div class="nav-links">
+            <a href="#">
+              Product
+              <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.2"/></svg>
+            </a>
+            <a href="#">
+              Solutions
+              <svg class="chevron" viewBox="0 0 10 10" fill="none" aria-hidden="true"><path d="M2 3.5L5 6.5L8 3.5" stroke="currentColor" stroke-width="1.2"/></svg>
+            </a>
+            <a href="#">Docs</a>
+            <a href="#">Pricing</a>
+          </div>
+        </div>
+        <div class="nav-right">
+          <a class="btn btn-ghost" href="#">Log in</a>
+          <a class="btn btn-solid" href="#">Sign up</a>
+          <button class="hamburger" type="button" aria-label="Open menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section data-vdna-id="hero">
+      <div class="container">
+        <div class="hero-copy">
+          <span class="eyebrow"><span class="dot"></span> Now in public beta</span>
+          <h1>Design interfaces<br>at the speed of thought</h1>
+          <p class="hero-sub">
+            A focused workspace for building, testing, and shipping interactive products — without
+            switching tools or losing momentum.
+          </p>
+          <div class="cta-row">
+            <a class="btn btn-solid" href="#">Start building</a>
+            <a class="btn btn-outline" href="#">View documentation</a>
+          </div>
+          <a class="secondary-link" href="#">See what's new in this release →</a>
+        </div>
+      </div>
+    </section>
+
+    <section data-vdna-id="features">
+      <div class="container">
+        <div class="showcase-panel">
+          <div class="showcase-glow" aria-hidden="true"></div>
+          <div class="showcase-toolbar">
+            <span class="chip active">Canvas</span>
+            <span class="chip">Components</span>
+            <span class="chip">Data</span>
+            <span class="chip">Logic</span>
+            <span class="chip">Deploy</span>
+          </div>
+          <div class="showcase-media">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+                 alt="Flat frontal screen capture of a dark interactive software workspace UI, with a soft blue radial glow highlighting a central panel, rendered as a product demo screenshot">
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-vdna-id="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span class="logo">Canvas</span>
+        <nav class="footer-links">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Status</a>
+          <a href="#">Contact</a>
+        </nav>
+        <span class="footer-note">© 2026 Canvas. All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var menuBtn = document.querySelector('.hamburger');
+      var navLinks = document.querySelector('.nav-links');
+      if (menuBtn && navLinks) {
+        menuBtn.addEventListener('click', function () {
+          var isOpen = navLinks.style.display === 'flex';
+          navLinks.style.display = isOpen ? 'none' : 'flex';
+          navLinks.style.flexDirection = 'column';
+          navLinks.style.position = 'absolute';
+          navLinks.style.top = '64px';
+          navLinks.style.left = '0';
+          navLinks.style.right = '0';
+          navLinks.style.background = 'var(--color-background)';
+          navLinks.style.padding = '16px 20px';
+          navLinks.style.borderBottom = '1px solid var(--color-border-soft)';
+        });
+      }
+
+      var chips = document.querySelectorAll('.chip');
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          chips.forEach(function (c) { c.classList.remove('active'); });
+          chip.classList.add('active');
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>

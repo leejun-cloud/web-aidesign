@@ -1,0 +1,56 @@
+/* design-tokens.css — approved-preview.html 에서 자동 추출
+Font stacks:
+ - -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+ - var(--font-family)
+ - inherit
+Breakpoints: 834px, 560px
+   손으로 고치지 말고 승인 HTML 을 고친 뒤 다시 추출하라. */
+:root {
+  --color-background: #FFFFFF;
+  --color-surface: #F3F2EE;
+  --color-primary: #0A0A0A;
+  --color-secondary: #6B6B6B;
+  --color-accent: #D6F23C;
+  --color-text: #111111;
+  --color-text-on-primary: #FFFFFF;
+  --color-text-on-accent: #0A0A0A;
+  --color-border: #E3E2DD;
+  --color-border-strong: #D8D7D1;
+  --color-shadow: rgba(10, 10, 10, 0.08);
+  --color-shadow-soft: rgba(10, 10, 10, 0.05);
+  --color-overlay-dim: rgba(10, 10, 10, 0.35);
+  --color-dot-grid: rgba(10, 10, 10, 0.08);
+  --color-panel-back: #EAE9E4;
+  --color-placeholder-grad-start: #E7E6E1;
+  --color-placeholder-grad-end: #D9D8D2;
+  --color-placeholder-grad-start-2: #111111;
+  --color-placeholder-grad-end-2: #2E2E2E;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --fs-eyebrow: 11px;
+  --fs-headline: clamp(36px, 7vw, 68px);
+  --fs-subhead: 18px;
+  --fs-nav: 15px;
+  --fs-body: 16px;
+  --fs-small: 13px;
+  --fs-metric: clamp(28px, 4vw, 40px);
+  --lh-tight: 1.07;
+  --lh-relaxed: 1.5;
+  --lh-normal: 1.3;
+  --tracking-wide: 0.14em;
+  --tracking-normal: normal;
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --space-2xs: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+  --space-2xl: 64px;
+  --space-3xl: 96px;
+  --container-max: 1180px;
+  --container-pad: 24px;
+  --container-pad-desktop: 72px;
+  --transition-fast: 180ms ease;
+}

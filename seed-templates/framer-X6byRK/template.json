@@ -1,0 +1,97 @@
+{
+  "id": "framer-X6byRK",
+  "name": "Framer",
+  "origin": "reference",
+  "sourceUrl": "https://www.framer.com",
+  "createdAt": "2026-10-31T02:53:49.079Z",
+  "visualDna": {
+    "mood": [
+      "confident",
+      "futuristic",
+      "minimal",
+      "technical",
+      "sleek",
+      "premium"
+    ],
+    "layout": {
+      "heroStructure": "centered-left-aligned top nav with large two-line headline, supporting subcopy, dual CTA buttons, and a secondary text link all left-aligned within a wide container, followed below by a large rounded-corner product screenshot panel bleeding toward viewport edges",
+      "grid": "single-column content flow with a wide full-bleed media panel beneath the hero text block; no visible multi-column card grid in the captured fold",
+      "containerWidth": "wide fluid container roughly 1280-1440px max-width with generous horizontal margins on desktop, collapsing to near-full-width with ~20px side padding on mobile",
+      "sectionOrder": [
+        "header",
+        "hero",
+        "productShowcase"
+      ],
+      "contentAlignment": "left-aligned text block for headline/subcopy/CTAs, with the screenshot panel centered and inset below",
+      "imagePlacement": "single large interactive-UI screenshot placed directly beneath the hero copy, framed in a rounded dark panel that reads as an embedded product demo",
+      "header": "fixed-height minimal top bar with logo-left, horizontal text nav with dropdown chevrons in the center-left cluster, and login/signup actions right-aligned; mobile collapses nav into a hamburger icon"
+    },
+    "typography": {
+      "fontPersonality": "modern grotesque sans-serif, geometric and slightly condensed, feels engineered rather than warm",
+      "headingScale": "hero headline roughly 2.5-3x body text size, wrapping across two lines at desktop width and three-plus lines on mobile",
+      "weight": "heavy/bold weight on headline, medium weight on nav and buttons, regular weight on body copy",
+      "lineHeight": "tight line-height on headline (around 1.05-1.1) for compact multi-line stacking, looser (around 1.4-1.5) on body subcopy",
+      "letterSpacing": "default to slightly tight tracking on headline, normal tracking on nav and body text",
+      "hierarchy": "clear three-tier hierarchy: small nav labels, oversized bold headline as primary focal point, medium-weight muted subcopy directly beneath"
+    },
+    "color": {
+      "background": "#000000",
+      "surface": "#141414",
+      "primary": "#FFFFFF",
+      "secondary": "#9A9A9A",
+      "accent": "#1F6FEB",
+      "text": "#FFFFFF",
+      "saturation": "near-desaturated monochrome palette with one isolated saturated accent used sparingly for interactive glow/highlight moments",
+      "temperature": "cool overall temperature from near-black base and neutral grays, punctuated by a cool blue accent"
+    },
+    "photography": {
+      "composition": "screen-capture-style product UI shown inside a rounded device-like frame rather than lifestyle photography",
+      "lighting": "simulated screen glow with a soft radial light bloom emanating from a central interactive element against the dark surface",
+      "colorGrading": "high-contrast near-monochrome grade with deep blacks and a single cool-toned glow accent",
+      "cameraAngle": "flat frontal angle, no perspective tilt, as if looking directly at a screen",
+      "depthOfField": "sharp overall focus with a soft glow/blur halo used only around the highlighted UI element for emphasis",
+      "humanPose": "not applicable — no human subjects present, interface-only visual",
+      "environment": "abstract dark digital environment representing a software canvas/workspace rather than a physical setting",
+      "texture": "smooth flat digital texture with subtle noise-free gradients and soft glow diffusion",
+      "imageRatio": "wide landscape ratio around 16:9 to 2:1 on desktop, taller near-square to portrait crop on mobile"
+    },
+    "components": {
+      "buttons": "pill-to-rounded-rectangle buttons with solid white fill for primary action and dark filled/outlined style for secondary action, compact horizontal padding",
+      "cards": "dark surface panels with soft rounded corners used to frame the product screenshot and inline UI chips, no visible drop shadow separation from background",
+      "forms": "not visible in this fold; cookie-consent bar implies simple flat rectangular button inputs with minimal styling",
+      "navigation": "horizontal top nav bar with text links, dropdown-caret indicators on grouped items, and distinct visual treatment for auth actions (ghost text link vs solid filled button)",
+      "border": "thin, low-contrast hairline borders separating panel sections, barely visible against the dark background",
+      "radius": "medium-large corner radius (roughly 12-20px) applied consistently to buttons, panels, and the hero media frame",
+      "shadow": "minimal to no elevation shadow; depth communicated instead through subtle surface-color contrast and glow effects"
+    },
+    "spacing": {
+      "sectionGap": "generous vertical gap (roughly 80-120px equivalent) between header, hero text, and the media panel below",
+      "containerPadding": "wide side padding on desktop (~80-100px), narrow side padding on mobile (~20px)",
+      "cardPadding": "moderate internal padding (~24-32px) inside the dark UI panel framing the product screenshot",
+      "contentGap": "compact vertical rhythm between headline, subcopy, and CTA row (~16-24px increments)",
+      "heroWhitespace": "ample surrounding negative space around the hero text block and above the media panel, reinforcing a spacious, uncluttered first impression"
+    },
+    "motion": {
+      "fade": "subtle fade-in suggested for hero text elements on load, consistent with a calm entrance rather than abrupt appearance",
+      "reveal": "progressive reveal of the product screenshot panel as if demonstrating a live interactive build process",
+      "scroll": "likely scroll-triggered section transitions beyond the captured fold, not confirmed from static screenshot",
+      "hover": "interactive UI chips (tab-style toggles, dropdown rows) imply hover-state highlighting with a lightened surface tone",
+      "transition": "smooth, moderate-duration easing implied by the soft glow diffusion and rounded panel treatment, avoiding abrupt or bouncy motion"
+    }
+  },
+  "photoDna": {
+    "name": "Framer Photo",
+    "traits": [
+      "순흑 배경 위 단일 글로우 광원 강조",
+      "고대비 모노톤 실루엣 처리",
+      "극도로 절제된 미니멀 스튜디오 톤",
+      "중심 피사체 주변 어둠으로 시선 집중"
+    ],
+    "lighting": "전면 배경은 완전한 암부로 가라앉히고, 중심 요소에만 차가운 청색 계열의 은은한 글로우 광을 배치해 광원과 그림자의 대비를 극단적으로 끌어올리는 방식. 측면이나 역광 없이 피사체 자체가 발광하는 듯한 연출.",
+    "grading": "저채도·저명도 베이스에 블루 톤 포인트 컬러를 더한 차가운 색온도. 대비는 매우 높고 필름 그레인 없이 디지털 느낌의 깨끗한 톤 전환, 블랙이 짙게 눌린 하이콘트라스트 그레이딩.",
+    "subject": "제품/인터페이스형 피사체 — 인물이나 자연 사물이 아닌 화면·패널 형태의 추상적 오브젝트를 다루는 구도.",
+    "depthOfField": "배경과 전경의 구분이 심도보다는 명암 대비로 이루어짐. 포커스 영역은 선명하게, 주변부는 암부에 묻혀 자연스럽게 흐려지는 효과."
+  },
+  "motion": [],
+  "defaultLevel": "similar"
+}

@@ -1,0 +1,786 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova Workspace — 팀을 위한 통합 작업 플랫폼</title>
+<style>
+  :root {
+    --color-background: #0A0A0F;
+    --color-surface: #15151C;
+    --color-primary: #5B6CFF;
+    --color-secondary: #8C8C99;
+    --color-accent: #6C7BFF;
+    --color-text: #F2F2F5;
+    --color-border: rgba(242, 242, 245, 0.1);
+    --color-border-strong: rgba(242, 242, 245, 0.16);
+    --color-surface-translucent: rgba(21, 21, 28, 0.72);
+    --color-header-bg: rgba(10, 10, 15, 0.86);
+    --color-shadow: rgba(91, 108, 255, 0.25);
+    --color-shadow-soft: rgba(0, 0, 0, 0.4);
+    --color-overlay-grad-1: rgba(108, 123, 255, 0.22);
+    --color-overlay-grad-2: rgba(10, 10, 15, 0);
+    --color-photo-sky-1: #3a3650;
+    --color-photo-sky-2: #cf8a6a;
+    --color-photo-sky-3: #efb998;
+    --color-photo-ground: #2a2735;
+    --color-photo-fog: rgba(242, 242, 245, 0.08);
+    --color-focus-ring: #8C8C99;
+
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --container-max-width: 1400px;
+    --container-padding-desktop: 64px;
+    --container-padding-mobile: 20px;
+    --section-gap: 120px;
+    --card-padding: 32px;
+    --radius-pill: 999px;
+    --radius-card: 20px;
+    --radius-input: 999px;
+
+    --transition-fast: 0.18s ease;
+    --transition-medium: 0.4s ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-family);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+  h1, h2, h3, p { overflow-wrap: anywhere; margin: 0; }
+
+  a { color: inherit; text-decoration: none; }
+
+  .container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 var(--container-padding-mobile);
+  }
+
+  @media (min-width: 834px) {
+    .container { padding: 0 48px; }
+  }
+
+  @media (min-width: 1440px) {
+    .container { padding: 0 var(--container-padding-desktop); }
+  }
+
+  /* ---------- Header ---------- */
+  header[data-vdna-id="header"] {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--color-header-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 18px;
+    padding-bottom: 18px;
+    gap: 16px;
+  }
+
+  .logo {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  nav.main-nav {
+    display: none;
+    gap: 28px;
+    align-items: center;
+  }
+
+  nav.main-nav a {
+    font-size: 14px;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: color var(--transition-fast);
+  }
+
+  nav.main-nav a:hover { color: var(--color-text); }
+
+  .chevron {
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg);
+    opacity: 0.7;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .header-actions .ghost-link {
+    display: none;
+    font-size: 14px;
+    color: var(--color-secondary);
+  }
+
+  @media (min-width: 834px) {
+    nav.main-nav { display: flex; }
+    .header-actions .ghost-link { display: inline-block; }
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    border-radius: var(--radius-pill);
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-text);
+  }
+
+  .btn-primary:hover {
+    background-color: var(--color-accent);
+    transform: translateY(-1px);
+  }
+
+  .btn-outline {
+    background-color: transparent;
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+
+  .btn-outline:hover {
+    background-color: var(--color-surface);
+    border-color: var(--color-secondary);
+  }
+
+  .btn-sm { padding: 10px 20px; font-size: 13px; }
+
+  /* ---------- Hero ---------- */
+  section[data-vdna-id="hero"] {
+    padding-top: 72px;
+    padding-bottom: var(--section-gap);
+    position: relative;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (min-width: 834px) {
+    .hero-grid {
+      grid-template-columns: 45% 1fr;
+      gap: 40px;
+    }
+  }
+
+  .hero-text { text-align: center; }
+
+  @media (min-width: 834px) {
+    .hero-text { text-align: left; }
+  }
+
+  .eyebrow {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--color-secondary);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    padding: 6px 16px;
+    margin-bottom: 28px;
+  }
+
+  h1.hero-heading {
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    margin-bottom: 24px;
+  }
+
+  @media (min-width: 834px) {
+    h1.hero-heading { font-size: 44px; }
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--color-secondary);
+    line-height: 1.7;
+    max-width: 480px;
+    margin: 0 auto 36px;
+  }
+
+  @media (min-width: 834px) {
+    .hero-sub { margin: 0 0 36px; }
+  }
+
+  .hero-cta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+  }
+
+  @media (min-width: 540px) {
+    .hero-cta-row { flex-direction: row; justify-content: center; }
+  }
+
+  @media (min-width: 834px) {
+    .hero-cta-row { justify-content: flex-start; }
+  }
+
+  .hero-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto 20px;
+  }
+
+  @media (min-width: 540px) {
+    .hero-form { flex-direction: row; }
+  }
+
+  @media (min-width: 834px) {
+    .hero-form { margin: 0 0 20px; }
+  }
+
+  .hero-form input {
+    flex: 1;
+    width: 100%;
+    background: transparent;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-input);
+    padding: 13px 20px;
+    color: var(--color-text);
+    font-size: 14px;
+    font-family: var(--font-family);
+  }
+
+  .hero-form input::placeholder { color: var(--color-secondary); }
+
+  .hero-form input:focus {
+    outline: 2px solid var(--color-focus-ring);
+    outline-offset: 2px;
+  }
+
+  .mobile-hero-photo {
+    width: 100%;
+    aspect-ratio: 9 / 14;
+    border-radius: var(--radius-card);
+    background:
+      linear-gradient(180deg, var(--color-overlay-grad-1) 0%, var(--color-overlay-grad-2) 40%),
+      linear-gradient(200deg, var(--color-photo-sky-1) 0%, var(--color-photo-sky-2) 55%, var(--color-photo-sky-3) 100%);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+
+  .mobile-hero-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--color-photo-ground) 0%, transparent 35%);
+  }
+
+  .mobile-hero-photo::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 14%;
+    width: 40%;
+    height: 22%;
+    transform: translateX(-50%);
+    background: var(--color-photo-fog);
+    border-radius: 4px;
+    filter: blur(1px);
+  }
+
+  @media (min-width: 834px) {
+    .mobile-hero-photo { display: none; }
+  }
+
+  /* dashboard card panel (desktop) */
+  .dashboard-panel {
+    display: none;
+  }
+
+  @media (min-width: 834px) {
+    .dashboard-panel {
+      display: block;
+      position: relative;
+    }
+  }
+
+  .floating-card {
+    background: var(--color-surface-translucent);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    box-shadow: 0 30px 60px -20px var(--color-shadow-soft), 0 0 40px -10px var(--color-shadow);
+  }
+
+  .floating-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .floating-card-top span {
+    font-size: 13px;
+    color: var(--color-secondary);
+    letter-spacing: 0.04em;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+  }
+
+  .stat-value {
+    font-size: 30px;
+    font-weight: 500;
+  }
+
+  .stat-delta {
+    font-size: 13px;
+    color: var(--color-primary);
+  }
+
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    height: 90px;
+    margin-bottom: 8px;
+  }
+
+  .bar-chart i {
+    flex: 1;
+    background: var(--color-primary);
+    opacity: 0.55;
+    border-radius: 4px 4px 0 0;
+    display: block;
+  }
+
+  .bar-chart i:nth-child(3n) { opacity: 0.9; }
+
+  .secondary-card {
+    position: absolute;
+    bottom: -32px;
+    left: -24px;
+    width: 62%;
+    z-index: 2;
+  }
+
+  @media (min-width: 1100px) {
+    .secondary-card { left: -48px; }
+  }
+
+  .secondary-card .floating-card { padding: 20px; }
+
+  .secondary-card .mini-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .secondary-card .mini-row:last-child { border-bottom: none; }
+
+  .secondary-card .mini-label { color: var(--color-text); font-weight: 600; }
+  .secondary-card .mini-value { color: var(--color-secondary); }
+
+  /* ---------- Product List ---------- */
+  section[data-vdna-id="features"] {
+    padding-bottom: var(--section-gap);
+  }
+
+  .section-head {
+    max-width: 640px;
+    margin: 0 auto 56px;
+    text-align: center;
+  }
+
+  .section-head .eyebrow { margin-bottom: 20px; }
+
+  .section-head h2 {
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.25;
+    margin-bottom: 14px;
+  }
+
+  @media (min-width: 834px) {
+    .section-head h2 { font-size: 32px; }
+  }
+
+  .section-head p {
+    color: var(--color-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  .product-list {
+    border-top: 1px solid var(--color-border);
+    max-width: 920px;
+    margin: 0 auto;
+  }
+
+  .product-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-fast);
+  }
+
+  @media (min-width: 834px) {
+    .product-item {
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      padding: 32px 16px;
+    }
+  }
+
+  .product-item:hover {
+    background-color: var(--color-surface);
+  }
+
+  .product-item h3 {
+    font-size: 17px;
+    font-weight: 600;
+  }
+
+  .product-item p {
+    color: var(--color-secondary);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  /* ---------- Dashboard Preview (story/showcase) ---------- */
+  section[data-vdna-id="story"] {
+    padding-bottom: var(--section-gap);
+  }
+
+  .showcase-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-card);
+    padding: var(--card-padding);
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+  }
+
+  @media (min-width: 834px) {
+    .showcase-card { padding: 56px; }
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  @media (min-width: 834px) {
+    .showcase-grid {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 56px;
+    }
+  }
+
+  .showcase-text h2 {
+    font-size: 26px;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .showcase-text p {
+    color: var(--color-secondary);
+    font-size: 15px;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .thumb-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .thumb {
+    aspect-ratio: 1 / 1;
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  .thumb.a { background: linear-gradient(145deg, var(--color-photo-sky-1), var(--color-photo-sky-2)); }
+  .thumb.b { background: linear-gradient(145deg, var(--color-photo-sky-2), var(--color-photo-sky-3)); }
+  .thumb.c { background: linear-gradient(145deg, var(--color-photo-ground), var(--color-photo-sky-1)); }
+  .thumb.d { background: linear-gradient(145deg, var(--color-photo-sky-3), var(--color-photo-sky-1)); }
+
+  .thumb::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, var(--color-photo-fog) 0%, transparent 60%);
+  }
+
+  /* ---------- Footer ---------- */
+  footer[data-vdna-id="footer"] {
+    border-top: 1px solid var(--color-border);
+    padding: 56px 0 40px;
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+    text-align: center;
+  }
+
+  @media (min-width: 834px) {
+    .footer-inner {
+      flex-direction: row;
+      justify-content: space-between;
+      text-align: left;
+    }
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--color-secondary);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-links a:hover { color: var(--color-text); }
+
+  .footer-copy {
+    font-size: 13px;
+    color: var(--color-secondary);
+  }
+
+  /* ---------- Motion ---------- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity var(--transition-medium), transform var(--transition-medium);
+  }
+
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<header data-vdna-id="header">
+  <div class="container header-inner">
+    <div class="logo">NOVA</div>
+    <nav class="main-nav">
+      <a href="#">제품 <span class="chevron"></span></a>
+      <a href="#">솔루션 <span class="chevron"></span></a>
+      <a href="#">리소스 <span class="chevron"></span></a>
+      <a href="#">가격</a>
+    </nav>
+    <div class="header-actions">
+      <a href="#" class="ghost-link">로그인</a>
+      <a href="#" class="btn btn-primary btn-sm">무료로 시작</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section data-vdna-id="hero">
+    <div class="container">
+      <div class="mobile-hero-photo" role="img" aria-label="안개 낀 노을빛 들판 위에 놓인 사무용 책상과 의자, 낮은 각도에서 올려다본 초현실적 합성 사진"></div>
+      <div class="hero-grid">
+        <div class="hero-text fade-in">
+          <span class="eyebrow">워크플로우 자동화 플랫폼</span>
+          <h1 class="hero-heading">팀의 업무 흐름을<br>하나의 화면으로</h1>
+          <p class="hero-sub">흩어진 도구와 데이터를 한곳에 모아, 팀이 더 빠르고 정확하게 결정할 수 있도록 돕는 통합 작업 공간입니다.</p>
+          <form class="hero-form" onsubmit="return false;">
+            <label for="email-input" class="sr-only" style="position:absolute;left:-9999px;">업무용 이메일</label>
+            <input id="email-input" type="email" placeholder="업무용 이메일 입력" autocomplete="email">
+            <button type="submit" class="btn btn-primary">시작하기</button>
+          </form>
+          <div class="hero-cta-row">
+            <a href="#" class="btn btn-outline">데모 보기</a>
+          </div>
+        </div>
+        <div class="dashboard-panel fade-in">
+          <div class="floating-card">
+            <div class="floating-card-top">
+              <span>주간 처리량</span>
+              <span>최근 7일</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-value">24,180</span>
+              <span class="stat-delta">+12.4%</span>
+            </div>
+            <div class="bar-chart">
+              <i style="height:40%"></i>
+              <i style="height:65%"></i>
+              <i style="height:50%"></i>
+              <i style="height:80%"></i>
+              <i style="height:58%"></i>
+              <i style="height:92%"></i>
+              <i style="height:70%"></i>
+            </div>
+          </div>
+          <div class="secondary-card">
+            <div class="floating-card">
+              <div class="mini-row">
+                <span class="mini-label">자동화 작업</span>
+                <span class="mini-value">128건</span>
+              </div>
+              <div class="mini-row">
+                <span class="mini-label">팀 연결</span>
+                <span class="mini-value">14팀</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-vdna-id="features">
+    <div class="container">
+      <div class="section-head fade-in">
+        <span class="eyebrow">제품 구성</span>
+        <h2>필요한 기능만, 꼭 맞게</h2>
+        <p>규모와 업무 방식에 맞춰 조합할 수 있는 모듈형 제품 라인업입니다.</p>
+      </div>
+      <div class="product-list">
+        <div class="product-item fade-in">
+          <h3>워크스페이스</h3>
+          <p>프로젝트, 문서, 대화를 하나의 공간에 통합해 맥락 전환 없이 작업을 이어갑니다.</p>
+        </div>
+        <div class="product-item fade-in">
+          <h3>자동화 빌더</h3>
+          <p>코드 없이 조건과 트리거를 조합해 반복 업무를 자동으로 처리합니다.</p>
+        </div>
+        <div class="product-item fade-in">
+          <h3>인사이트 대시보드</h3>
+          <p>팀의 활동 데이터를 실시간으로 집계해 병목과 기회를 한눈에 파악합니다.</p>
+        </div>
+        <div class="product-item fade-in">
+          <h3>통합 커넥터</h3>
+          <p>기존에 쓰던 도구들과 연결해 데이터를 양방향으로 동기화합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section data-vdna-id="story">
+    <div class="container">
+      <div class="showcase-card fade-in">
+        <div class="showcase-grid">
+          <div class="showcase-text">
+            <span class="eyebrow">대시보드 미리보기</span>
+            <h2>흐름이 보이는<br>실시간 작업 현황</h2>
+            <p>팀의 모든 작업이 어느 단계에 있는지, 무엇이 지연되고 있는지 하나의 화면에서 확인하세요.</p>
+            <a href="#" class="btn btn-outline">전체 기능 살펴보기</a>
+          </div>
+          <div class="thumb-grid">
+            <div class="thumb a" role="img" aria-label="일몰 조명 속 사무 의자가 놓인 안개 낀 산악 지형, 저채도 파스텔 색보정 사진 썸네일"></div>
+            <div class="thumb b" role="img" aria-label="보라-주황 색보정이 더해진 초현실적 야외 책상 풍경, 로우앵글 사진 썸네일"></div>
+            <div class="thumb c" role="img" aria-label="대기원근감으로 흐려진 배경 산세와 선명한 전경 오브제가 대비되는 사진 썸네일"></div>
+            <div class="thumb d" role="img" aria-label="일출 시간대 측광으로 부드럽게 확산된 안개 낀 들판 사진 썸네일"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-vdna-id="footer">
+  <div class="container footer-inner">
+    <div class="logo">NOVA</div>
+    <nav class="footer-links">
+      <a href="#">제품</a>
+      <a href="#">가격</a>
+      <a href="#">문서</a>
+      <a href="#">고객지원</a>
+      <a href="#">개인정보처리방침</a>
+    </nav>
+    <span class="footer-copy">© 2026 Nova Workspace</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var items = document.querySelectorAll('.fade-in');
+    if (!('IntersectionObserver' in window)) {
+      items.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

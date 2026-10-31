@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowline — Product Preview</title>
+<style>
+  :root {
+    --color-background: #FFFFFF;
+    --color-surface: #FDFBFF;
+    --color-primary: #635BFF;
+    --color-primary-dark: #4B3FE0;
+    --color-secondary: #4B5B74;
+    --color-accent: #FF8A3D;
+    --color-text: #1A1F36;
+    --color-text-muted: #5A6478;
+    --color-border: #E6E6F0;
+    --color-white: #FFFFFF;
+
+    --gradient-ribbon-1: #8A5CFF;
+    --gradient-ribbon-2: #B15CFF;
+    --gradient-ribbon-3: #FF5CA8;
+    --gradient-ribbon-4: #FF8A3D;
+    --gradient-ribbon-5: #FFC75C;
+    --gradient-glow: rgba(255, 255, 255, 0.55);
+
+    --shadow-color-soft: rgba(26, 31, 54, 0.08);
+    --shadow-color-medium: rgba(26, 31, 54, 0.16);
+    --overlay-light: rgba(255, 255, 255, 0.72);
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+    --space-2xl: 6rem;
+    --space-3xl: 8rem;
+
+    --radius-sm: 6px;
+    --radius-md: 8px;
+
+    --container-max: 1280px;
+    --transition-fast: 220ms ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--font-sans);
+    color: var(--color-text);
+    background: var(--color-background);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--space-md);
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3 { overflow-wrap: anywhere; margin: 0; }
+
+  /* ---------- Header ---------- */
+  header[data-vdna-id="header"] {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-weight: 700;
+    font-size: 1.125rem;
+    letter-spacing: 0;
+    color: var(--color-text);
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    justify-content: center;
+  }
+
+  .nav-links a {
+    font-size: 0.9375rem;
+    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    padding: 0.25em 0;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-links a:hover { color: var(--color-primary); }
+
+  .nav-caret {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--color-secondary);
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    padding: 0.7em 1.4em;
+    border-radius: var(--radius-sm);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: transform var(--transition-fast), background-color var(--transition-fast), filter var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+
+  .btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
+
+  .btn-outline {
+    background: var(--color-white);
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+  }
+
+  .btn-outline:hover { background: var(--color-surface); transform: translateY(-1px); }
+
+  .btn-arrow { transition: transform var(--transition-fast); }
+  .btn-primary:hover .btn-arrow { transform: translateX(3px); }
+
+  .btn-sm { font-size: 0.875rem; padding: 0.55em 1.1em; }
+
+  /* ---------- Hero ---------- */
+  section[data-vdna-id="hero"] {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-3xl) 0 var(--space-2xl);
+  }
+
+  .hero-ribbon {
+    position: absolute;
+    top: -10%;
+    right: -10%;
+    width: 65%;
+    height: 130%;
+    background: linear-gradient(135deg,
+      var(--gradient-ribbon-1) 0%,
+      var(--gradient-ribbon-2) 25%,
+      var(--gradient-ribbon-3) 55%,
+      var(--gradient-ribbon-4) 80%,
+      var(--gradient-ribbon-5) 100%);
+    clip-path: polygon(35% 0%, 100% 0%, 100% 100%, 5% 100%);
+    opacity: 0.92;
+    filter: blur(0px);
+  }
+
+  .hero-ribbon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 60% 30%, var(--gradient-glow), transparent 60%);
+  }
+
+  .hero-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-xl);
+    align-items: center;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+  }
+
+  .hero-label {
+    display: inline-block;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--color-secondary);
+    text-transform: uppercase;
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-headline {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-headline .accent-tint {
+    background: linear-gradient(90deg, var(--color-primary), var(--gradient-ribbon-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero-sub {
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    max-width: 480px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+  }
+
+  .hero-visual-placeholder {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+  }
+
+  /* ---------- Logo bar (trust) ---------- */
+  section[data-vdna-id="trust"] {
+    padding: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .trust-caption {
+    text-align: left;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+  }
+
+  .logo-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .logo-item {
+    flex: 1 1 100px;
+    min-width: 90px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    color: var(--color-secondary);
+    opacity: 0.7;
+    padding: var(--space-xs);
+  }
+
+  /* ---------- Feature intro (features) ---------- */
+  section[data-vdna-id="features"] {
+    padding: var(--space-2xl) 0;
+  }
+
+  .features-head {
+    max-width: 640px;
+    margin-bottom: var(--space-xl);
+  }
+
+  .features-head .hero-label { margin-bottom: var(--space-sm); }
+
+  .features-head h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: var(--space-sm);
+  }
+
+  .features-head p {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  .feature-item {
+    padding: var(--space-md) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .feature-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--color-primary), var(--gradient-ribbon-3));
+    margin-bottom: var(--space-sm);
+  }
+
+  .feature-item h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+  }
+
+  .feature-item p {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer[data-vdna-id="footer"] {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-xl) 0;
+    background: var(--color-surface);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .footer-col h4 {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    margin: 0 0 var(--space-sm);
+  }
+
+  .footer-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .footer-col a {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .footer-col a:hover { color: var(--color-primary); }
+
+  .footer-bottom {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--color-border);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  /* ---------- Cookie banner ---------- */
+  .cookie-banner {
+    position: fixed;
+    left: var(--space-md);
+    right: var(--space-md);
+    bottom: var(--space-md);
+    max-width: 420px;
+    background: var(--color-white);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: 0 12px 32px var(--shadow-color-medium);
+    z-index: 100;
+    transform: translateY(0);
+    transition: transform var(--transition-fast), opacity var(--transition-fast);
+  }
+
+  .cookie-banner.is-hidden {
+    transform: translateY(120%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .cookie-banner p {
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+    margin: 0 0 var(--space-sm);
+    line-height: 1.5;
+  }
+
+  .cookie-actions {
+    display: flex;
+    gap: var(--space-xs);
+  }
+
+  /* reveal on scroll */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- Breakpoints ---------- */
+  @media (min-width: 834px) {
+    .wrap { padding: 0 var(--space-xl); }
+
+    .nav-links { display: flex; }
+
+    .hero-grid {
+      grid-template-columns: 58% 1fr;
+    }
+
+    .hero-headline { font-size: 3.25rem; }
+
+    .features-head h2 { font-size: 2.25rem; }
+
+    .feature-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 833px) {
+    .nav-links { display: none; }
+  }
+
+  @media (min-width: 1440px) {
+    .hero-headline { font-size: 3.75rem; }
+    section[data-vdna-id="hero"] { padding: var(--space-3xl) 0 var(--space-3xl); }
+  }
+</style>
+</head>
+<body>
+
+<header data-vdna-id="header">
+  <div class="wrap header-inner">
+    <a class="logo" href="#">Flowline</a>
+    <ul class="nav-links">
+      <li><a href="#">제품 <span class="nav-caret"></span></a></li>
+      <li><a href="#">솔루션 <span class="nav-caret"></span></a></li>
+      <li><a href="#">요금제</a></li>
+      <li><a href="#">리소스 <span class="nav-caret"></span></a></li>
+      <li><a href="#">문의</a></li>
+    </ul>
+    <div class="header-actions">
+      <a class="btn btn-outline btn-sm" href="#">로그인</a>
+      <a class="btn btn-primary btn-sm" href="#">무료로 시작하기</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section data-vdna-id="hero">
+    <div class="hero-ribbon" role="presentation" aria-hidden="true"></div>
+    <div class="wrap hero-grid">
+      <div class="hero-content">
+        <span class="hero-label">신규 출시</span>
+        <h1 class="hero-headline">팀의 업무 속도를<br><span class="accent-tint">한 단계 끌어올리는</span> 방법</h1>
+        <p class="hero-sub">흩어진 작업을 하나의 흐름으로 연결하는 협업 플랫폼. 설정은 몇 분, 효과는 지속됩니다.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#">무료로 시작하기 <span class="btn-arrow" aria-hidden="true">→</span></a>
+          <a class="btn btn-outline" href="#">데모 보기</a>
+        </div>
+      </div>
+      <div class="hero-visual-placeholder" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <section data-vdna-id="trust">
+    <div class="wrap">
+      <p class="trust-caption">전 세계 다양한 규모의 팀이 함께하고 있습니다</p>
+      <div class="logo-row">
+        <div class="logo-item">NORTHPEAK</div>
+        <div class="logo-item">CEDARLINE</div>
+        <div class="logo-item">ARGOWORKS</div>
+        <div class="logo-item">BRIGHTFIELD</div>
+        <div class="logo-item">ORBITAL</div>
+        <div class="logo-item">VESTRA</div>
+        <div class="logo-item">HALCYON</div>
+        <div class="logo-item">LUMEN&amp;CO</div>
+      </div>
+    </div>
+  </section>
+
+  <section data-vdna-id="features">
+    <div class="wrap">
+      <div class="features-head reveal">
+        <span class="hero-label">핵심 기능</span>
+        <h2>복잡한 작업을 단순한 흐름으로</h2>
+        <p>필요한 도구를 하나씩 더하지 않아도, 처음부터 모든 것이 연결되어 있습니다.</p>
+      </div>
+      <div class="feature-grid">
+        <div class="feature-item reveal">
+          <div class="feature-icon" aria-hidden="true"></div>
+          <h3>자동 워크플로우</h3>
+          <p>반복 업무를 규칙 한 번으로 자동화하고, 팀은 더 중요한 일에 집중합니다.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon" aria-hidden="true"></div>
+          <h3>실시간 협업</h3>
+          <p>같은 화면에서 동시에 작업하며 변경 사항을 바로 확인할 수 있습니다.</p>
+        </div>
+        <div class="feature-item reveal">
+          <div class="feature-icon" aria-hidden="true"></div>
+          <h3>통합 대시보드</h3>
+          <p>흩어진 지표와 작업 현황을 하나의 화면에서 한눈에 파악합니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer data-vdna-id="footer">
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="footer-col">
+        <h4>제품</h4>
+        <ul>
+          <li><a href="#">기능</a></li>
+          <li><a href="#">요금제</a></li>
+          <li><a href="#">연동</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>회사</h4>
+        <ul>
+          <li><a href="#">소개</a></li>
+          <li><a href="#">채용</a></li>
+          <li><a href="#">블로그</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>리소스</h4>
+        <ul>
+          <li><a href="#">문서</a></li>
+          <li><a href="#">고객지원</a></li>
+          <li><a href="#">커뮤니티</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>법적 고지</h4>
+        <ul>
+          <li><a href="#">개인정보처리방침</a></li>
+          <li><a href="#">이용약관</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Flowline. All rights reserved.</div>
+  </div>
+</footer>
+
+<div class="cookie-banner" id="cookieBanner" role="dialog" aria-live="polite">
+  <p>더 나은 경험을 위해 쿠키를 사용합니다. 계속 이용하시면 쿠키 사용에 동의하는 것으로 간주됩니다.</p>
+  <div class="cookie-actions">
+    <button class="btn btn-primary btn-sm" id="cookieAccept" type="button">동의</button>
+    <button class="btn btn-outline btn-sm" id="cookieDecline" type="button">거부</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var banner = document.getElementById('cookieBanner');
+    var accept = document.getElementById('cookieAccept');
+    var decline = document.getElementById('cookieDecline');
+
+    function hideBanner() {
+      banner.classList.add('is-hidden');
+    }
+
+    accept.addEventListener('click', hideBanner);
+    decline.addEventListener('click', hideBanner);
+
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+
+      revealEls.forEach(function (el) { observer.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+    }
+  })();
+</script>
+
+</body>
+</html>

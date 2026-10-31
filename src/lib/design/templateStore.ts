@@ -133,16 +133,39 @@ export async function saveTemplate(args: SaveTemplateArgs): Promise<DesignTempla
   return meta;
 }
 
-export async function listTemplates(): Promise<DesignTemplate[]> {
-  const root = templatesDir();
-  let entries: string[];
+/**
+ * 미리 만들어 둔 Reference Template(디자인 가이드 샘플)을 담아두는 저장소.
+ * workspace/ 는 .gitignore 대상이라 사용자 프로젝트 데이터는 배포에 포함되지 않지만,
+ * 이 디렉터리는 git에 커밋되어 배포 환경(Vercel)에서도 템플릿 갤러리를 그대로 보여줄 수 있다.
+ */
+export const SEED_TEMPLATES_DIR = path.join(process.cwd(), "seed-templates");
+
+async function findTemplateRoot(id: string): Promise<string> {
+  for (const root of [templatesDir(), SEED_TEMPLATES_DIR]) {
+    const dir = path.join(root, id);
+    if (!dir.startsWith(root + path.sep)) continue; // 경로 탈출 방지
+    try {
+      await fs.access(dir);
+      return dir;
+    } catch {
+      // 다음 저장소 확인
+    }
+  }
+  throw new Error(`Template ${id} 를 찾을 수 없습니다`);
+}
+
+async function listTemplateIds(root: string): Promise<string[]> {
   try {
-    entries = await fs.readdir(root);
+    return await fs.readdir(root);
   } catch {
     return [];
   }
+}
+
+export async function listTemplates(): Promise<DesignTemplate[]> {
+  const ids = new Set([...(await listTemplateIds(templatesDir())), ...(await listTemplateIds(SEED_TEMPLATES_DIR))]);
   const out: DesignTemplate[] = [];
-  for (const id of entries) {
+  for (const id of ids) {
     try {
       out.push(await readTemplate(id));
     } catch {
@@ -153,7 +176,7 @@ export async function listTemplates(): Promise<DesignTemplate[]> {
 }
 
 export async function readTemplate(id: string): Promise<DesignTemplate> {
-  const dir = templateDir(id);
+  const dir = await findTemplateRoot(id);
   const audit = auditTemplateFiles(await fs.readdir(dir));
   if (!audit.ok) throw new Error(`Template ${id} 파일 누락: ${audit.missing.join(", ")}`);
   const raw = await fs.readFile(path.join(dir, TEMPLATE_META_FILE), "utf8");
@@ -167,8 +190,8 @@ export function templateDir(id: string) {
   return dir;
 }
 
-export const templateFilePath = (id: string, file: (typeof TEMPLATE_FILES)[number]) =>
-  path.join(templateDir(id), file);
+export const templateFilePath = async (id: string, file: (typeof TEMPLATE_FILES)[number]) =>
+  path.join(await findTemplateRoot(id), file);
 
 /** PRD §50 — Reference 스크린샷에서 Photo DNA 만 따로 추출한다 */
 export function buildPhotoDnaPrompt(shots: string[], opts: { name: string; sourceUrl?: string }): string {
@@ -200,7 +223,7 @@ export async function extractPhotoDna(
   return runAgentJson(PhotoDna, {
     prompt: buildPhotoDnaPrompt(shots, opts),
     images: shots,
-    model: opts.model ?? "sonnet",
+    model: opts.model,
   });
 }
 

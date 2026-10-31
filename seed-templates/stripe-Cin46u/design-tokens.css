@@ -1,0 +1,38 @@
+/* design-tokens.css — approved-preview.html 에서 자동 추출
+Font stacks:
+ - var(--font-sans)
+Breakpoints: 834px, 833px, 1440px
+   손으로 고치지 말고 승인 HTML 을 고친 뒤 다시 추출하라. */
+:root {
+  --color-background: #FFFFFF;
+  --color-surface: #FDFBFF;
+  --color-primary: #635BFF;
+  --color-primary-dark: #4B3FE0;
+  --color-secondary: #4B5B74;
+  --color-accent: #FF8A3D;
+  --color-text: #1A1F36;
+  --color-text-muted: #5A6478;
+  --color-border: #E6E6F0;
+  --color-white: #FFFFFF;
+  --gradient-ribbon-1: #8A5CFF;
+  --gradient-ribbon-2: #B15CFF;
+  --gradient-ribbon-3: #FF5CA8;
+  --gradient-ribbon-4: #FF8A3D;
+  --gradient-ribbon-5: #FFC75C;
+  --gradient-glow: rgba(255, 255, 255, 0.55);
+  --shadow-color-soft: rgba(26, 31, 54, 0.08);
+  --shadow-color-medium: rgba(26, 31, 54, 0.16);
+  --overlay-light: rgba(255, 255, 255, 0.72);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: 4rem;
+  --space-2xl: 6rem;
+  --space-3xl: 8rem;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --container-max: 1280px;
+  --transition-fast: 220ms ease;
+}

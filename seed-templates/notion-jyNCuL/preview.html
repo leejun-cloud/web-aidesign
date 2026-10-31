@@ -1,0 +1,526 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flow — 하루의 흐름을 정리하는 가장 쉬운 방법</title>
+<style>
+  :root {
+    --color-background: #FFFFFF;
+    --color-surface: #F7F7F5;
+    --color-primary: #111111;
+    --color-secondary: #C7E8CB;
+    --color-accent: #2383E2;
+    --color-text: #1A1A1A;
+    --color-text-muted: #5B5B57;
+    --color-white: #FFFFFF;
+    --color-border: #E3E3DF;
+    --color-shadow: rgba(17, 17, 17, 0.08);
+    --color-overlay: rgba(17, 17, 17, 0.45);
+    --color-accent-soft: #E7F1FC;
+    --color-secondary-deep: #2F6B3A;
+    --color-illustration-line: #1A1A1A;
+    --color-illustration-fill: #FFD66B;
+    --color-screenshot-bg-1: #EDEFF3;
+    --color-screenshot-bg-2: #DDE3EC;
+    --color-screenshot-accent: #2383E2;
+
+    --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+    --space-7: 96px;
+    --space-8: 128px;
+
+    --radius-pill: 999px;
+    --radius-lg: 20px;
+    --radius-md: 12px;
+
+    --shadow-soft: 0 20px 60px -20px var(--color-shadow);
+    --container-max: 1240px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-stack);
+    background: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 6%;
+  }
+
+  a { color: inherit; text-decoration: none; }
+
+  h1, h2, h3, p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  /* ---------- Header ---------- */
+  header.site-header {
+    width: 100%;
+    border-bottom: 1px solid var(--color-border);
+    background: var(--color-background);
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-top: var(--space-2);
+    padding-bottom: var(--space-2);
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: 0;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  nav.main-nav {
+    display: flex;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+  }
+
+  nav.main-nav button {
+    background: none;
+    border: none;
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 4px 0;
+  }
+
+  nav.main-nav .chevron {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--color-text-muted);
+    border-bottom: 2px solid var(--color-text-muted);
+    transform: rotate(45deg);
+    margin-top: -3px;
+  }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    flex-shrink: 0;
+  }
+
+  .link-plain {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-white);
+  }
+  .btn-primary:hover { background: #2a2a2a; }
+
+  .btn-secondary {
+    background: var(--color-accent-soft);
+    color: var(--color-accent);
+  }
+  .btn-secondary:hover { background: #d8e9fb; }
+
+  .btn-small {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+
+  /* ---------- Hero ---------- */
+  section.hero {
+    width: 100%;
+    padding-top: var(--space-7);
+    padding-bottom: 0;
+    background: var(--color-background);
+  }
+
+  .hero-content {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .hero-content h1 {
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: 0;
+    color: var(--color-primary);
+  }
+
+  .hero-content .subcopy {
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    max-width: 560px;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: var(--space-2);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: var(--space-2);
+  }
+
+  .hero-shot {
+    margin-top: var(--space-6);
+    width: 100%;
+  }
+
+  .hero-shot-frame {
+    width: 100%;
+    max-width: 1040px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 8;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: linear-gradient(180deg, var(--color-screenshot-bg-1) 0%, var(--color-screenshot-bg-2) 100%);
+    border: 1px solid var(--color-border);
+    border-bottom: none;
+    box-shadow: var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-shot-topbar {
+    height: 36px;
+    background: var(--color-white);
+    border-bottom: 1px solid var(--color-border);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 var(--space-2);
+    flex-shrink: 0;
+  }
+
+  .hero-shot-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-border);
+  }
+
+  .hero-shot-body {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2);
+    padding: var(--space-3);
+  }
+
+  .hero-shot-col {
+    background: var(--color-white);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .hero-shot-pill {
+    height: 10px;
+    border-radius: var(--radius-pill);
+    background: var(--color-border);
+    width: 70%;
+  }
+
+  .hero-shot-card {
+    height: 34px;
+    border-radius: 8px;
+    background: var(--color-screenshot-accent);
+    opacity: 0.12;
+  }
+
+  .hero-shot-card.alt {
+    background: var(--color-secondary-deep);
+    opacity: 0.18;
+  }
+
+  .hero-shot-sketch {
+    position: absolute;
+    right: 5%;
+    bottom: -14px;
+    width: 72px;
+    height: 72px;
+    opacity: 0.9;
+  }
+
+  /* ---------- Trust / Logo bar ---------- */
+  section.trust {
+    width: 100%;
+    background: var(--color-surface);
+    padding-top: var(--space-6);
+    padding-bottom: var(--space-6);
+  }
+
+  .trust-label {
+    text-align: center;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+  }
+
+  .logo-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .logo-chip {
+    flex: 1 1 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    color: var(--color-text-muted);
+    font-weight: 700;
+    font-size: 0.95rem;
+    opacity: 0.6;
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site-footer {
+    width: 100%;
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-5);
+  }
+
+  .footer-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-3);
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-size: 0.85rem;
+    color: #C9C9C6;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: var(--space-3);
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 0.85rem;
+    color: #C9C9C6;
+  }
+  .footer-links a:hover { color: var(--color-white); }
+
+  @media (max-width: 834px) {
+    nav.main-nav { display: none; }
+    .hero-shot-body { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 390px) {
+    .hero-content .subcopy { font-size: 1rem; }
+    .hero-ctas { flex-direction: column; width: 100%; }
+    .hero-ctas .btn { width: 100%; }
+    .header-actions .link-plain { display: none; }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in {
+      animation: fadeInUp 0.6s ease both;
+    }
+    .fade-in-delay-1 { animation-delay: 0.1s; }
+    .fade-in-delay-2 { animation-delay: 0.2s; }
+    .fade-in-delay-3 { animation-delay: 0.3s; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+  <header class="site-header" data-vdna-id="header">
+    <div class="wrap header-inner">
+      <span class="logo">Flow</span>
+      <nav class="main-nav" aria-label="주요 메뉴">
+        <button type="button">제품 <span class="chevron" aria-hidden="true"></span></button>
+        <button type="button">기능</button>
+        <button type="button">요금제 <span class="chevron" aria-hidden="true"></span></button>
+        <button type="button">리소스</button>
+      </nav>
+      <div class="header-actions">
+        <a class="link-plain" href="#login">로그인</a>
+        <a class="btn btn-primary btn-small" href="#signup">무료로 시작하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" data-vdna-id="hero">
+      <div class="wrap">
+        <div class="hero-content fade-in">
+          <h1>하루의 흐름을<br>한눈에 정리하세요</h1>
+          <p class="subcopy">일정과 할 일을 하나의 화면에서 관리하는 가장 간단한 방법. 복잡한 설정 없이 오늘 바로 시작할 수 있어요.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="#signup">무료로 시작하기</a>
+            <a class="btn btn-secondary" href="#demo">데모 보기</a>
+          </div>
+        </div>
+        <div class="hero-shot reveal">
+          <div class="hero-shot-frame" role="img" aria-label="캘린더와 칸반 보드가 함께 보이는 제품 대시보드 스크린샷, 플랫한 UI 캡처 스타일">
+            <div class="hero-shot-topbar">
+              <span class="hero-shot-dot"></span>
+              <span class="hero-shot-dot"></span>
+              <span class="hero-shot-dot"></span>
+            </div>
+            <div class="hero-shot-body">
+              <div class="hero-shot-col">
+                <div class="hero-shot-pill"></div>
+                <div class="hero-shot-card"></div>
+                <div class="hero-shot-card alt"></div>
+              </div>
+              <div class="hero-shot-col">
+                <div class="hero-shot-pill"></div>
+                <div class="hero-shot-card alt"></div>
+                <div class="hero-shot-card"></div>
+              </div>
+              <div class="hero-shot-col">
+                <div class="hero-shot-pill"></div>
+                <div class="hero-shot-card"></div>
+              </div>
+              <div class="hero-shot-col">
+                <div class="hero-shot-pill"></div>
+                <div class="hero-shot-card alt"></div>
+                <div class="hero-shot-card"></div>
+              </div>
+            </div>
+            <svg class="hero-shot-sketch" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+              <circle cx="50" cy="38" r="18" fill="none" stroke="var(--color-illustration-line)" stroke-width="3"/>
+              <path d="M28 85 Q50 55 72 85" fill="none" stroke="var(--color-illustration-line)" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="43" cy="36" r="3" fill="var(--color-illustration-line)"/>
+              <circle cx="58" cy="36" r="3" fill="var(--color-illustration-line)"/>
+              <path d="M42 46 Q50 51 59 46" fill="none" stroke="var(--color-illustration-line)" stroke-width="2.5" stroke-linecap="round"/>
+              <rect x="30" y="12" width="40" height="10" rx="5" fill="var(--color-illustration-fill)" opacity="0.8"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust" data-vdna-id="trust">
+      <div class="wrap">
+        <p class="trust-label">팀들이 이미 함께하고 있어요</p>
+        <div class="logo-bar">
+          <span class="logo-chip">Northwind</span>
+          <span class="logo-chip">Acme Labs</span>
+          <span class="logo-chip">Brightline</span>
+          <span class="logo-chip">Riverstone</span>
+          <span class="logo-chip">Clearview</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" data-vdna-id="footer">
+    <div class="wrap footer-inner">
+      <span class="footer-copy">© 2026 Flow. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#privacy">개인정보처리방침</a>
+        <a href="#terms">이용약관</a>
+        <a href="#contact">문의하기</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window) || reveals.length === 0) {
+        reveals.forEach(function (el) { el.classList.add('is-visible'); });
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      reveals.forEach(function (el) { observer.observe(el); });
+    })();
+  </script>
+</body>
+</html>

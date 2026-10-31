@@ -114,7 +114,7 @@ export async function generatePreview(args: GenerateArgs & { model?: string }): 
     try {
       const raw = await runAgent({
         prompt: buildGeneratePrompt({ ...args, feedback }),
-        model: args.model ?? "sonnet",
+        model: args.model,
         timeoutMs: 20 * 60 * 1000,
       });
       html = carveHtml(raw);
@@ -187,7 +187,7 @@ export async function refinePreview(args: RefineArgs): Promise<GenerateResult> {
       const raw = await runAgent({
         prompt,
         images: [...own, ...args.shots],
-        model: args.model ?? "sonnet",
+        model: args.model,
         timeoutMs: 20 * 60 * 1000,
       });
       next = carveHtml(raw);

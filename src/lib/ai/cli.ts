@@ -1,6 +1,7 @@
 import { spawn } from "node:child_process";
 import path from "node:path";
 import { z, type ZodType } from "zod";
+import { assertLocalEngine } from "@/lib/env";
 
 export type Engine = "claude" | "codex";
 
@@ -58,6 +59,7 @@ function extractText(engine: Engine, stdout: string): string {
 }
 
 export async function runAgent(call: AgentCall): Promise<string> {
+  assertLocalEngine();
   const engine = engineFrom(call.engine);
   const prompt = buildPrompt(call);
   const args = argsFor(engine, call, prompt);

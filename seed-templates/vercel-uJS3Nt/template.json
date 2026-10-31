@@ -1,0 +1,97 @@
+{
+  "id": "vercel-uJS3Nt",
+  "name": "Vercel",
+  "origin": "reference",
+  "sourceUrl": "https://vercel.com",
+  "createdAt": "2026-10-31T02:48:09.276Z",
+  "visualDna": {
+    "mood": [
+      "minimal",
+      "confident",
+      "technical",
+      "monochrome",
+      "spacious",
+      "sharp"
+    ],
+    "layout": {
+      "heroStructure": "split asymmetric hero: left-aligned headline+CTA block, centered glowing geometric mark, right-aligned stacked micro-copy lines, all on a single full-bleed background row",
+      "grid": "loose 3-column implicit grid in the hero (text / icon / text) collapsing to single-column stack on mobile",
+      "containerWidth": "wide fluid container near full viewport width with generous side margins (~24-32px), no hard max-width card wrapper",
+      "sectionOrder": [
+        "header",
+        "hero",
+        "logoStrip"
+      ],
+      "contentAlignment": "left-aligned headline and body text, center-aligned hero mark, right-aligned supporting copy on desktop; fully center-aligned stack on mobile",
+      "imagePlacement": "single symbolic graphic centered in the hero vertical axis, floating above the fold with soft radial glow behind it",
+      "header": "slim single-row top nav, logo mark far left, text nav links center-left, pill-shaped CTA buttons far right"
+    },
+    "typography": {
+      "fontPersonality": "clean geometric sans-serif, neutral and engineering-flavored rather than warm",
+      "headingScale": "very large display heading (roughly 56-72px desktop) dropping to mid-large (~32-36px) on mobile",
+      "weight": "medium-to-regular nav and body text contrasted with a lighter-weight oversized display heading",
+      "lineHeight": "tight line-height on multi-line headline (close to 1.0-1.1x) with looser spacing on supporting list text",
+      "letterSpacing": "default to slightly tight tracking on headline, normal tracking on nav and body",
+      "hierarchy": "three clear tiers: small uppercase-free nav text, oversized headline as focal point, small secondary list copy as tertiary support"
+    },
+    "color": {
+      "background": "#F7F7F5",
+      "surface": "#FFFFFF",
+      "primary": "#0A0A0A",
+      "secondary": "#6B6B6B",
+      "accent": "#FFFFFF",
+      "text": "#111111",
+      "saturation": "near-desaturated neutral grayscale palette with no chromatic accent color",
+      "temperature": "neutral-cool, slightly warm-gray undertone in the background"
+    },
+    "photography": {
+      "composition": "single abstract 3D-rendered icon centered within a soft radial glow, isolated against flat background",
+      "lighting": "soft diffused top-down studio light with a bright halo glow radiating behind the object",
+      "colorGrading": "high-contrast monochrome rendering, pure black object against near-white glow",
+      "cameraAngle": "straight-on frontal view with no perspective tilt",
+      "depthOfField": "sharp focus throughout, glow providing the only depth cue",
+      "humanPose": "none, no human subjects present",
+      "environment": "abstract void environment, no literal setting or background scene",
+      "texture": "smooth matte solid surface with subtle gradient shading for dimensionality",
+      "imageRatio": "roughly square bounding area for the central graphic, scaling down proportionally on mobile"
+    },
+    "components": {
+      "buttons": "fully rounded pill buttons, solid dark fill for primary action and white-outline ghost style for secondary action",
+      "cards": "no visible card containers in this view; content sits directly on background",
+      "forms": "not present in this view",
+      "navigation": "horizontal text-link nav with small dropdown carets, collapsing to a single hamburger icon on mobile",
+      "border": "hairline 1px borders used sparingly on outlined buttons only",
+      "radius": "large pill radius (999px) on buttons, no radius on text or logo elements",
+      "shadow": "no hard drop shadows, only a diffuse glow effect behind the hero graphic"
+    },
+    "spacing": {
+      "sectionGap": "large vertical gap (~96-120px) between hero and logo strip",
+      "containerPadding": "moderate horizontal padding (~24-32px) consistent across header and content",
+      "cardPadding": "not applicable, no card components present",
+      "contentGap": "medium gap (~16-24px) between headline, CTA row, and supporting text blocks",
+      "heroWhitespace": "very generous negative space surrounding the central graphic and flanking text columns"
+    },
+    "motion": {
+      "fade": "likely gentle fade-in on hero text and graphic on initial load",
+      "reveal": "logo strip items may reveal with a subtle stagger on scroll into view",
+      "scroll": "minimal scroll-triggered movement, content largely static once loaded",
+      "hover": "subtle background/opacity shift on nav links and button hover states",
+      "transition": "short, fast easing (150-250ms) typical of UI micro-interactions rather than dramatic animation"
+    }
+  },
+  "photoDna": {
+    "name": "Vercel Photo",
+    "traits": [
+      "단색 배경 위 단일 피사체를 중앙에 배치한 제품 연출",
+      "피사체 뒤로 번지는 부드러운 원형 글로우(halo) 조명",
+      "피사체 바로 아래 떨어지는 짧고 진한 드롭섀도우",
+      "무채색(블랙·오프화이트) 톤의 고대비 미니멀 연출"
+    ],
+    "lighting": "정면 상단에서 피사체를 향해 비추는 소프트 라이트로, 피사체 뒤쪽에 원형으로 퍼지는 은은한 백색 글로우를 만들어내고 피사체 바닥에는 선명도 높은 단일 그림자를 떨어뜨려 대비를 형성한다.",
+    "grading": "채도를 거의 배제한 무채색 그레이딩. 배경은 아주 옅은 오프화이트/그레이, 피사체는 짙은 블랙으로 처리해 명도 대비를 극대화하며, 필름 질감이나 색온도 편차 없이 깨끗하고 중립적인 톤을 유지한다.",
+    "subject": "기하학적 단일 오브제(제품/아이콘형 피사체)를 스튜디오 환경에서 단독으로 촬영한 듯한 구성으로, 인물이나 공간보다는 추상적·상징적 오브제 중심이다.",
+    "depthOfField": "배경과 피사체 간 경계가 선명한 얕은 체감 심도로, 글로우가 배경을 흐릿하게 감싸는 동안 피사체 윤곽은 날카롭게 유지되어 또렷이 부각된다."
+  },
+  "motion": [],
+  "defaultLevel": "similar"
+}

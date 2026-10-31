@@ -3,6 +3,7 @@ import path from "node:path";
 import { chromium, type Browser } from "playwright";
 import { browseBin, detectBlock, parseStatus, session } from "@/lib/browser/browse";
 import { normalizeUrl } from "@/lib/design/url";
+import { assertLocalEngine } from "@/lib/env";
 
 /**
  * 브라우저 선택 정책 (VDNA_BROWSER)
@@ -97,6 +98,7 @@ export async function captureUrl(
   viewport: ViewportName = "desktop",
   opts?: ShotOpts,
 ): Promise<string> {
+  assertLocalEngine();
   const urlCheck = normalizeUrl(rawUrl);
   if (!urlCheck.ok) throw new BlockedSiteError(rawUrl, urlCheck.error ?? "잘못된 URL", "empty");
   const url = urlCheck.url!;
@@ -117,8 +119,10 @@ export async function captureUrl(
   return b.screenshot(outFile, { fullPage: opts?.fullPage ?? true });
 }
 
-export const captureHtml = (html: string, outFile: string, viewport: ViewportName = "desktop", opts?: ShotOpts) =>
-  shoot({ html }, outFile, viewport, opts);
+export const captureHtml = (html: string, outFile: string, viewport: ViewportName = "desktop", opts?: ShotOpts) => {
+  assertLocalEngine();
+  return shoot({ html }, outFile, viewport, opts);
+};
 
 /** URL 에서 구조 분석용 원자료를 뽑는다 (PRD §24, §31 측정 가능 항목) */
 export interface SiteFacts {
@@ -174,6 +178,7 @@ type PageFacts = Omit<SiteFacts, "url" | "loadMs">;
 
 /** 외부 사이트에서 구조 분석용 원자료를 수집한다. 차단 페이지면 던진다. */
 export async function collectSiteFacts(rawUrl: string): Promise<SiteFacts> {
+  assertLocalEngine();
   const urlCheck = normalizeUrl(rawUrl);
   if (!urlCheck.ok) throw new BlockedSiteError(rawUrl, urlCheck.error ?? "잘못된 URL", "empty");
   const url = urlCheck.url!;

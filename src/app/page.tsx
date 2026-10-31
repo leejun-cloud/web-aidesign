@@ -25,6 +25,12 @@ const MODES = [
     desc: "미리 만들어 둔 디자인에서 출발합니다.",
     ready: true,
   },
+  {
+    href: "/clone",
+    title: "다른 곳 복제하기",
+    desc: "URL 하나로 기존 사이트를 구조·문안까지 최대한 그대로 재현합니다.",
+    ready: true,
+  },
 ];
 
 export default function Home() {

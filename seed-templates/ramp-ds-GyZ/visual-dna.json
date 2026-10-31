@@ -1,0 +1,76 @@
+{
+  "mood": [
+    "minimal",
+    "confident",
+    "efficient",
+    "high-contrast",
+    "data-driven"
+  ],
+  "layout": {
+    "heroStructure": "centered top nav with notice bar above, left-aligned oversized headline block followed by a single-line input+CTA form, then a large full-width product screenshot panel below the fold",
+    "grid": "single-column centered content track with a max-width container; dashboard mockup breaks out to a wider inset panel",
+    "containerWidth": "narrow-to-medium centered column (roughly 1100-1200px) for text content, widening to near-full-bleed for the product screenshot panel",
+    "sectionOrder": [
+      "announcementBar",
+      "header",
+      "hero",
+      "productScreenshot",
+      "liveMetricsBar"
+    ],
+    "contentAlignment": "left-aligned headline and supporting copy, left-aligned form controls, no center-justified body text",
+    "imagePlacement": "single large hero product screenshot placed directly beneath the CTA form inside a soft dotted-pattern card",
+    "header": "slim dark announcement strip pinned above a white sticky nav with logo left, dropdown nav items center-left, text link and two differentiated buttons (outline-ish ghost + solid dark) right"
+  },
+  "typography": {
+    "fontPersonality": "geometric sans-serif with a slightly rounded, confident, tech-editorial feel",
+    "headingScale": "very large display headline (roughly 60-72px) against small 11-12px uppercase label text above it, creating an extreme size jump",
+    "weight": "bold/heavy for the hero headline, medium for nav and body, semibold for buttons",
+    "lineHeight": "tight leading on the display headline (near 1.05-1.1), relaxed leading on the subcopy paragraph (around 1.5)",
+    "letterSpacing": "wide tracked uppercase for the small eyebrow label, normal tracking elsewhere",
+    "hierarchy": "three-tier stack: tiny uppercase eyebrow, massive headline, medium-weight subheading paragraph, then compact form"
+  },
+  "color": {
+    "background": "#FFFFFF",
+    "surface": "#F3F2EE",
+    "primary": "#0A0A0A",
+    "secondary": "#6B6B6B",
+    "accent": "#D6F23C",
+    "text": "#111111",
+    "saturation": "mostly desaturated neutrals with one piercing high-saturation accent color used sparingly on primary CTAs",
+    "temperature": "cool-neutral overall grayscale palette punctuated by a warm-leaning acid-yellow-green accent"
+  },
+  "photography": {
+    "composition": "no human photography in the hero; product UI screenshot is the sole visual, framed as a floating browser-window card with layered secondary panels peeking from behind",
+    "lighting": "flat, even studio-style lighting simulated through soft neutral shadows under the floating UI card",
+    "colorGrading": "clean neutral white-balanced grading with muted grays, no stylized color cast",
+    "cameraAngle": "flat frontal/orthogonal view of the UI window, no perspective tilt",
+    "depthOfField": "layered flat planes rather than optical blur; background panel is slightly offset and dimmed to imply depth",
+    "humanPose": "not applicable, no human subjects present in this view",
+    "environment": "abstract dotted-grid backdrop pattern standing in for a physical environment",
+    "texture": "subtle dot-grid texture on the background surface, otherwise flat and smooth UI surfaces",
+    "imageRatio": "wide landscape panel roughly 16:9 to 2:1 for the product screenshot container"
+  },
+  "components": {
+    "buttons": "pill-to-rounded-rectangle buttons with two tiers: a dark near-black solid primary and a bright accent-colored solid secondary, both with medium padding and no visible border",
+    "cards": "flat white/light-gray cards with very subtle borders and minimal shadow, used for the floating product screenshot window",
+    "forms": "single-line combined input and button bar, input with thin gray border and rounded corners, placeholder text in muted gray",
+    "navigation": "horizontal top nav with dropdown chevrons, logo mark plus wordmark on the left, utility links and dual-tier CTAs on the right",
+    "border": "hairline 1px light gray borders on inputs, cards, and the nav bottom edge",
+    "radius": "medium rounded corners (roughly 8-12px) on buttons, inputs, and cards",
+    "shadow": "very soft, low-opacity drop shadow beneath the floating screenshot card for subtle lift"
+  },
+  "spacing": {
+    "sectionGap": "generous vertical gap (roughly 80-120px equivalent) between header, hero copy, and the screenshot panel",
+    "containerPadding": "moderate horizontal padding (around 64-80px on desktop) framing the centered content column",
+    "cardPadding": "comfortable internal padding on the input/button bar and the screenshot frame, roughly 16-24px",
+    "contentGap": "moderate gap (around 16-24px) between eyebrow label, headline, subcopy, and form",
+    "heroWhitespace": "ample open whitespace above and below the headline, letting the oversized type breathe against a plain white field"
+  },
+  "motion": {
+    "fade": "likely gentle fade-in on hero text elements as the page loads",
+    "reveal": "scroll-triggered reveal of the product screenshot and metrics bar as they enter viewport",
+    "scroll": "subtle parallax-like layering between the front and back UI panels on scroll",
+    "hover": "slight brightness or lift change on buttons and nav dropdown items on hover",
+    "transition": "fast, short-duration easing transitions (150-250ms) for interactive state changes"
+  }
+}

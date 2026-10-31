@@ -85,7 +85,7 @@ export async function planProduction(args: PlanArgs): Promise<ProductionPlan> {
     const prompt = feedback ? `${base}\n\n## 직전 계획이 섹션 커버리지 검사에 실패했다\n${feedback}\n같은 형식으로 계획 전체를 다시 출력하라.` : base;
     const plan = await runAgentJson(ProductionPlan, {
       prompt,
-      model: args.model ?? "sonnet",
+      model: args.model,
       timeoutMs: 20 * 60 * 1000,
     });
     const audit = auditPlanCoverage(plan, args.sectionIds);
@@ -168,7 +168,6 @@ export async function runProduction(args: CodeArgs): Promise<ProductionRunResult
     prompt: buildProductionCodePrompt(args),
     cwd: args.outDir,
     allowWrite: true,
-    model: "sonnet",
     timeoutMs: 25 * 60 * 1000,
   });
   return { files: await listProducedFiles(args.outDir), log };

@@ -1,0 +1,75 @@
+{
+  "mood": [
+    "minimal",
+    "confident",
+    "technical",
+    "monochrome",
+    "spacious",
+    "sharp"
+  ],
+  "layout": {
+    "heroStructure": "split asymmetric hero: left-aligned headline+CTA block, centered glowing geometric mark, right-aligned stacked micro-copy lines, all on a single full-bleed background row",
+    "grid": "loose 3-column implicit grid in the hero (text / icon / text) collapsing to single-column stack on mobile",
+    "containerWidth": "wide fluid container near full viewport width with generous side margins (~24-32px), no hard max-width card wrapper",
+    "sectionOrder": [
+      "header",
+      "hero",
+      "logoStrip"
+    ],
+    "contentAlignment": "left-aligned headline and body text, center-aligned hero mark, right-aligned supporting copy on desktop; fully center-aligned stack on mobile",
+    "imagePlacement": "single symbolic graphic centered in the hero vertical axis, floating above the fold with soft radial glow behind it",
+    "header": "slim single-row top nav, logo mark far left, text nav links center-left, pill-shaped CTA buttons far right"
+  },
+  "typography": {
+    "fontPersonality": "clean geometric sans-serif, neutral and engineering-flavored rather than warm",
+    "headingScale": "very large display heading (roughly 56-72px desktop) dropping to mid-large (~32-36px) on mobile",
+    "weight": "medium-to-regular nav and body text contrasted with a lighter-weight oversized display heading",
+    "lineHeight": "tight line-height on multi-line headline (close to 1.0-1.1x) with looser spacing on supporting list text",
+    "letterSpacing": "default to slightly tight tracking on headline, normal tracking on nav and body",
+    "hierarchy": "three clear tiers: small uppercase-free nav text, oversized headline as focal point, small secondary list copy as tertiary support"
+  },
+  "color": {
+    "background": "#F7F7F5",
+    "surface": "#FFFFFF",
+    "primary": "#0A0A0A",
+    "secondary": "#6B6B6B",
+    "accent": "#FFFFFF",
+    "text": "#111111",
+    "saturation": "near-desaturated neutral grayscale palette with no chromatic accent color",
+    "temperature": "neutral-cool, slightly warm-gray undertone in the background"
+  },
+  "photography": {
+    "composition": "single abstract 3D-rendered icon centered within a soft radial glow, isolated against flat background",
+    "lighting": "soft diffused top-down studio light with a bright halo glow radiating behind the object",
+    "colorGrading": "high-contrast monochrome rendering, pure black object against near-white glow",
+    "cameraAngle": "straight-on frontal view with no perspective tilt",
+    "depthOfField": "sharp focus throughout, glow providing the only depth cue",
+    "humanPose": "none, no human subjects present",
+    "environment": "abstract void environment, no literal setting or background scene",
+    "texture": "smooth matte solid surface with subtle gradient shading for dimensionality",
+    "imageRatio": "roughly square bounding area for the central graphic, scaling down proportionally on mobile"
+  },
+  "components": {
+    "buttons": "fully rounded pill buttons, solid dark fill for primary action and white-outline ghost style for secondary action",
+    "cards": "no visible card containers in this view; content sits directly on background",
+    "forms": "not present in this view",
+    "navigation": "horizontal text-link nav with small dropdown carets, collapsing to a single hamburger icon on mobile",
+    "border": "hairline 1px borders used sparingly on outlined buttons only",
+    "radius": "large pill radius (999px) on buttons, no radius on text or logo elements",
+    "shadow": "no hard drop shadows, only a diffuse glow effect behind the hero graphic"
+  },
+  "spacing": {
+    "sectionGap": "large vertical gap (~96-120px) between hero and logo strip",
+    "containerPadding": "moderate horizontal padding (~24-32px) consistent across header and content",
+    "cardPadding": "not applicable, no card components present",
+    "contentGap": "medium gap (~16-24px) between headline, CTA row, and supporting text blocks",
+    "heroWhitespace": "very generous negative space surrounding the central graphic and flanking text columns"
+  },
+  "motion": {
+    "fade": "likely gentle fade-in on hero text and graphic on initial load",
+    "reveal": "logo strip items may reveal with a subtle stagger on scroll into view",
+    "scroll": "minimal scroll-triggered movement, content largely static once loaded",
+    "hover": "subtle background/opacity shift on nav links and button hover states",
+    "transition": "short, fast easing (150-250ms) typical of UI micro-interactions rather than dramatic animation"
+  }
+}

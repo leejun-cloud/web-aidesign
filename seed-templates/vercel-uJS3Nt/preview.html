@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design Template Preview</title>
+<style>
+  :root {
+    --color-background: #F7F7F5;
+    --color-surface: #FFFFFF;
+    --color-primary: #0A0A0A;
+    --color-secondary: #6B6B6B;
+    --color-accent: #FFFFFF;
+    --color-text: #111111;
+    --color-glow-start: rgba(10, 10, 10, 0.08);
+    --color-glow-end: rgba(10, 10, 10, 0);
+    --color-border: rgba(10, 10, 10, 0.12);
+    --color-shape-fill: #0A0A0A;
+    --color-shape-shade: #2B2B2B;
+    --color-logo-fill: #D8D8D4;
+
+    --space-container-pad: 24px;
+    --space-section-gap: 96px;
+    --space-content-gap: 20px;
+    --space-nav-gap: 32px;
+
+    --radius-pill: 999px;
+    --radius-none: 0;
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+    --transition-fast: 180ms ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background: var(--color-background);
+    color: var(--color-text);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 var(--space-container-pad);
+  }
+
+  /* Header */
+  header[data-vdna-id="header"] {
+    width: 100%;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-nav-gap);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .logo-mark {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+    flex-shrink: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: var(--space-nav-gap);
+    flex-wrap: wrap;
+  }
+
+  .nav-links a {
+    color: var(--color-text);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity var(--transition-fast);
+  }
+  .nav-links a:hover,
+  .nav-links a:focus-visible { opacity: 0.6; }
+
+  .nav-cta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast), opacity var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-accent);
+    border: 1px solid var(--color-primary);
+  }
+  .btn-primary:hover, .btn-primary:focus-visible { opacity: 0.85; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-primary);
+    border: 1px solid var(--color-primary);
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible {
+    background: var(--color-primary);
+    color: var(--color-accent);
+  }
+
+  .nav-toggle { display: none; }
+
+  /* Hero */
+  section[data-vdna-id="hero"] {
+    width: 100%;
+    padding-top: 72px;
+    padding-bottom: var(--space-section-gap);
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 56px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .hero-text-left {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-content-gap);
+    align-items: center;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--color-secondary);
+    letter-spacing: 0.02em;
+  }
+
+  h1 {
+    font-size: 36px;
+    font-weight: 300;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    margin: 0;
+    color: var(--color-text);
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--color-secondary);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .hero-cta-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 8px;
+  }
+
+  .hero-mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mark-glow {
+    position: relative;
+    width: 220px;
+    height: 220px;
+    max-width: 60vw;
+    border-radius: var(--radius-none);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(circle, var(--color-glow-start) 0%, var(--color-glow-end) 70%);
+  }
+
+  .mark-shape {
+    width: 96px;
+    height: 96px;
+    max-width: 100%;
+    background: linear-gradient(145deg, var(--color-shape-fill), var(--color-shape-shade));
+    clip-path: polygon(50% 0%, 100% 38%, 82% 100%, 18% 100%, 0% 38%);
+  }
+
+  .hero-text-right {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .hero-text-right p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--color-secondary);
+    line-height: 1.7;
+  }
+
+  /* Logo strip */
+  section[data-vdna-id="trust"] {
+    width: 100%;
+    padding-bottom: 72px;
+  }
+
+  .logo-strip-label {
+    text-align: center;
+    font-size: 12px;
+    color: var(--color-secondary);
+    margin-bottom: 28px;
+  }
+
+  .logo-strip-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    align-items: center;
+  }
+
+  .logo-chip {
+    height: 36px;
+    border-radius: var(--radius-none);
+    background: var(--color-logo-fill);
+    opacity: 0.8;
+  }
+
+  /* Footer */
+  footer[data-vdna-id="footer"] {
+    width: 100%;
+    border-top: 1px solid var(--color-border);
+    padding: 32px 0;
+  }
+
+  .footer-row {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    text-align: center;
+    font-size: 13px;
+    color: var(--color-secondary);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .footer-links a {
+    color: var(--color-secondary);
+    text-decoration: none;
+  }
+  .footer-links a:hover, .footer-links a:focus-visible { color: var(--color-text); }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(8px);
+    animation: fadeIn 600ms ease forwards;
+  }
+  .fade-in.delay-1 { animation-delay: 80ms; }
+  .fade-in.delay-2 { animation-delay: 160ms; }
+
+  @keyframes fadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (min-width: 834px) {
+    :root { --space-container-pad: 32px; }
+
+    .nav-links { display: flex; }
+    .nav-toggle { display: none; }
+
+    h1 { font-size: 56px; }
+    .hero-sub { font-size: 17px; }
+
+    .hero-grid {
+      grid-template-columns: 1fr auto 1fr;
+      text-align: left;
+      gap: 32px;
+    }
+    .hero-text-left { align-items: flex-start; }
+    .hero-cta-row { justify-content: flex-start; }
+    .hero-sub { margin: 0; }
+    .hero-text-right { align-items: flex-end; text-align: right; }
+
+    .logo-strip-row { grid-template-columns: repeat(4, 1fr); }
+
+    .footer-row { flex-direction: row; justify-content: space-between; text-align: left; }
+  }
+
+  @media (min-width: 1440px) {
+    h1 { font-size: 68px; }
+    .mark-glow { width: 280px; height: 280px; }
+    .mark-shape { width: 120px; height: 120px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { animation: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+  <header data-vdna-id="header">
+    <div class="wrap nav-row">
+      <div class="logo-mark">Northfield</div>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#">Product</a>
+        <a href="#">Solutions</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+      </nav>
+      <div class="nav-cta-row">
+        <a class="btn btn-ghost" href="#">Sign in</a>
+        <a class="btn btn-primary" href="#">Get started</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section data-vdna-id="hero">
+      <div class="wrap hero-grid">
+        <div class="hero-text-left fade-in">
+          <span class="eyebrow">Built for engineering teams</span>
+          <h1>Infrastructure that scales as quietly as it runs.</h1>
+          <p class="hero-sub">A single platform to provision, monitor, and ship — without the operational noise that usually comes with it.</p>
+          <div class="hero-cta-row">
+            <a class="btn btn-primary" href="#">Start free</a>
+            <a class="btn btn-ghost" href="#">View docs</a>
+          </div>
+        </div>
+
+        <div class="hero-mark fade-in delay-1">
+          <div class="mark-glow">
+            <div class="mark-shape" role="img" aria-label="Abstract monochrome geometric emblem, centered with a soft glow, symbolizing the product core"></div>
+          </div>
+        </div>
+
+        <div class="hero-text-right fade-in delay-2">
+          <p>99.99% uptime target</p>
+          <p>Deploys in under a minute</p>
+          <p>Usage-based pricing</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-vdna-id="trust">
+      <div class="wrap">
+        <p class="logo-strip-label">Trusted by engineering teams at</p>
+        <div class="logo-strip-row">
+          <div class="logo-chip" role="img" aria-label="Placeholder partner company wordmark"></div>
+          <div class="logo-chip" role="img" aria-label="Placeholder partner company wordmark"></div>
+          <div class="logo-chip" role="img" aria-label="Placeholder partner company wordmark"></div>
+          <div class="logo-chip" role="img" aria-label="Placeholder partner company wordmark"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-vdna-id="footer">
+    <div class="wrap footer-row">
+      <span>© 2026 Northfield. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Status</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var navLinks = document.querySelectorAll('.nav-links a, .btn');
+      navLinks.forEach(function (el) {
+        el.addEventListener('mouseenter', function () {
+          el.style.transitionDuration = '180ms';
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

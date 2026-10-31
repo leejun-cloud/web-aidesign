@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workspace — 제품 미리보기</title>
+<style>
+  :root {
+    --color-background: #0A0A0A;
+    --color-surface: #141414;
+    --color-primary: #FFFFFF;
+    --color-secondary: #A3A3A3;
+    --color-accent: #5E6AD2;
+    --color-text: #E5E5E5;
+
+    --color-border: rgba(255, 255, 255, 0.08);
+    --color-border-strong: rgba(255, 255, 255, 0.14);
+    --color-header-bg: rgba(10, 10, 10, 0.72);
+    --color-card-bg: rgba(20, 20, 20, 0.92);
+    --color-card-bg-2: rgba(28, 28, 28, 0.95);
+    --color-glow: rgba(94, 106, 210, 0.35);
+    --color-glow-soft: rgba(94, 106, 210, 0.16);
+    --color-shadow: rgba(0, 0, 0, 0.5);
+    --color-accent-soft: rgba(94, 106, 210, 0.14);
+    --color-star: #E8C96B;
+    --color-panel-grad-1: #151515;
+    --color-panel-grad-2: #0D0D0F;
+    --color-input-bg: rgba(255, 255, 255, 0.04);
+    --color-focus-ring: rgba(94, 106, 210, 0.55);
+
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", Roboto, Helvetica, Arial, sans-serif;
+
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2.5rem;
+    --space-xl: 4rem;
+    --space-2xl: 6rem;
+    --space-3xl: 9rem;
+
+    --container-max: 1240px;
+    --container-pad: clamp(1.25rem, 5vw, 4rem);
+
+    --radius-pill: 999px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-background);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+  a { color: inherit; text-decoration: none; }
+  h1, h2, h3, p { margin: 0; overflow-wrap: anywhere; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding-left: var(--container-pad);
+    padding-right: var(--container-pad);
+  }
+
+  header[data-vdna-id="header"] {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: var(--color-header-bg);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .nav-logo-mark {
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: linear-gradient(135deg, var(--color-accent), var(--color-panel-grad-1));
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: var(--space-md);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    font-size: 0.875rem;
+    letter-spacing: 0.01em;
+    color: var(--color-secondary);
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .nav-links a:hover,
+  .nav-links a:focus-visible { color: var(--color-primary); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  .nav-login {
+    font-size: 0.875rem;
+    color: var(--color-secondary);
+    display: none;
+    transition: color 0.25s ease;
+  }
+  .nav-login:hover, .nav-login:focus-visible { color: var(--color-primary); }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-pill);
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.55rem 1.1rem;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.25s ease, color 0.25s ease, opacity 0.25s ease;
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-background);
+  }
+  .btn-primary:hover, .btn-primary:focus-visible { opacity: 0.85; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border-color: var(--color-border-strong);
+  }
+  .btn-ghost:hover, .btn-ghost:focus-visible { background: var(--color-input-bg); }
+
+  section[data-vdna-id="hero"] {
+    padding-top: clamp(3.5rem, 10vw, var(--space-3xl));
+    padding-bottom: var(--space-xl);
+  }
+
+  .hero-copy {
+    max-width: 760px;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-secondary);
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    margin-bottom: var(--space-md);
+  }
+
+  .hero-title {
+    font-size: clamp(2.25rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    color: var(--color-primary);
+  }
+
+  .hero-sub {
+    margin-top: var(--space-md);
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    line-height: 1.7;
+    color: var(--color-secondary);
+    max-width: 540px;
+  }
+
+  .hero-actions {
+    margin-top: var(--space-lg);
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .btn-lg { padding: 0.8rem 1.6rem; font-size: 0.95rem; }
+
+  section[data-vdna-id="features"] {
+    padding-bottom: var(--space-3xl);
+  }
+
+  .showcase-frame {
+    position: relative;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-border);
+    background: linear-gradient(180deg, var(--color-panel-grad-1), var(--color-panel-grad-2));
+    overflow: hidden;
+    box-shadow: 0 40px 100px -40px var(--color-shadow);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    min-height: 320px;
+  }
+
+  .showcase-sidebar {
+    display: none;
+    border-right: 1px solid var(--color-border);
+    padding: var(--space-md);
+  }
+
+  .sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0.7rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+    margin-bottom: 0.25rem;
+  }
+
+  .sidebar-item.is-active {
+    background: var(--color-accent-soft);
+    color: var(--color-primary);
+  }
+
+  .sidebar-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .showcase-main {
+    padding: var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+
+  .main-line {
+    height: 10px;
+    border-radius: 6px;
+    background: var(--color-border-strong);
+  }
+  .main-line.w-60 { width: 60%; }
+  .main-line.w-80 { width: 80%; }
+  .main-line.w-40 { width: 40%; }
+
+  .main-block {
+    margin-top: var(--space-sm);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    background: var(--color-input-bg);
+  }
+
+  .floating-card {
+    position: relative;
+    margin: 0 auto;
+    margin-top: -2.5rem;
+    width: min(320px, 86%);
+    background: var(--color-card-bg-2);
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: 0 30px 60px -20px var(--color-shadow), 0 0 40px var(--color-glow-soft);
+  }
+
+  .floating-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .floating-card-star {
+    color: var(--color-star);
+  }
+
+  .floating-card-msg {
+    font-size: 0.85rem;
+    color: var(--color-text);
+    line-height: 1.6;
+    margin-bottom: var(--space-sm);
+  }
+
+  .floating-card-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-pill);
+    padding: 0.5rem 0.9rem;
+  }
+
+  .floating-card-input input {
+    flex: 1;
+    min-width: 0;
+    background: transparent;
+    border: none;
+    color: var(--color-text);
+    font-size: 0.8rem;
+    font-family: var(--font-sans);
+    outline: none;
+  }
+
+  .floating-card-input input::placeholder { color: var(--color-secondary); }
+
+  .floating-card-input input:focus-visible {
+    box-shadow: 0 0 0 2px var(--color-focus-ring);
+    border-radius: var(--radius-pill);
+  }
+
+  .floating-card-send {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    border: none;
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  footer[data-vdna-id="footer"] {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-xl) 0;
+  }
+
+  .footer-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .footer-links a {
+    font-size: 0.8rem;
+    color: var(--color-secondary);
+    transition: color 0.25s ease;
+  }
+  .footer-links a:hover, .footer-links a:focus-visible { color: var(--color-primary); }
+
+  .footer-copy {
+    font-size: 0.75rem;
+    color: var(--color-secondary);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .fade-in {
+      animation: fadeIn 0.9s ease both;
+    }
+    .reveal-up {
+      animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: 0.15s;
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes revealUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (min-width: 640px) {
+    .nav-login { display: inline-block; }
+  }
+
+  @media (min-width: 834px) {
+    .nav-links { display: flex; }
+    .showcase-grid { grid-template-columns: 220px 1fr; }
+    .showcase-sidebar { display: block; }
+    .floating-card { position: absolute; right: var(--space-lg); bottom: -2rem; margin: 0; width: 300px; }
+  }
+
+  @media (min-width: 1440px) {
+    .hero-title { font-size: 4.75rem; }
+  }
+</style>
+</head>
+<body>
+
+  <header data-vdna-id="header">
+    <div class="container nav">
+      <a href="#" class="nav-logo" aria-label="홈으로 이동">
+        <span class="nav-logo-mark" aria-hidden="true"></span>
+        Workspace
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">제품</a></li>
+        <li><a href="#features">기능</a></li>
+        <li><a href="#">요금제</a></li>
+        <li><a href="#">문서</a></li>
+        <li><a href="#">블로그</a></li>
+        <li><a href="#">문의</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="nav-login">로그인</a>
+        <a href="#" class="btn btn-primary">시작하기</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section data-vdna-id="hero">
+      <div class="container hero-copy fade-in">
+        <span class="hero-eyebrow">신규 베타 오픈</span>
+        <h1 class="hero-title">생각보다 빠르게<br>작업을 완성하는 도구</h1>
+        <p class="hero-sub">흩어진 작업 흐름을 하나의 화면으로 모으고, 반복적인 단계는 자동으로 처리합니다. 팀이 다시 만드는 일에 집중하도록.</p>
+        <div class="hero-actions">
+          <a href="#" class="btn btn-primary btn-lg">무료로 시작하기</a>
+          <a href="#" class="btn btn-ghost btn-lg">데모 보기</a>
+        </div>
+      </div>
+    </section>
+
+    <section data-vdna-id="features" id="features">
+      <div class="container">
+        <div class="showcase-frame reveal-up">
+          <div class="showcase-grid">
+            <aside class="showcase-sidebar" aria-hidden="true">
+              <div class="sidebar-item is-active"><span class="sidebar-dot"></span>프로젝트</div>
+              <div class="sidebar-item"><span class="sidebar-dot"></span>작업 보드</div>
+              <div class="sidebar-item"><span class="sidebar-dot"></span>자동화</div>
+              <div class="sidebar-item"><span class="sidebar-dot"></span>보고서</div>
+            </aside>
+            <div class="showcase-main">
+              <div class="main-line w-60"></div>
+              <div class="main-line w-40"></div>
+              <div class="main-block">
+                <div class="main-line w-80" style="margin-bottom: 0.6rem;"></div>
+                <div class="main-line w-60"></div>
+              </div>
+            </div>
+          </div>
+          <img
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1'%3E%3C/svg%3E"
+            alt="다크 테마의 생산성 소프트웨어 대시보드 UI 스크린샷, 좌측 사이드바와 우측 본문 패널로 구성된 앱 화면"
+            style="position:absolute; width:1px; height:1px; opacity:0;"
+          >
+          <div class="floating-card">
+            <div class="floating-card-header">
+              <span class="floating-card-star" aria-hidden="true">★</span>
+              어시스턴트
+            </div>
+            <p class="floating-card-msg">이번 주 작업을 요약해서 정리해 드릴까요?</p>
+            <div class="floating-card-input">
+              <input type="text" placeholder="메시지를 입력하세요" aria-label="어시스턴트에게 메시지 보내기">
+              <button type="button" class="floating-card-send" aria-label="메시지 전송">↑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-vdna-id="footer">
+    <div class="container footer-row">
+      <ul class="footer-links">
+        <li><a href="#">제품</a></li>
+        <li><a href="#">요금제</a></li>
+        <li><a href="#">문서</a></li>
+        <li><a href="#">블로그</a></li>
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+      </ul>
+      <p class="footer-copy">© 2026 Workspace. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var items = document.querySelectorAll('.fade-in, .reveal-up');
+      if (!('IntersectionObserver' in window) || items.length === 0) return;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      items.forEach(function (el) { io.observe(el); });
+    })();
+  </script>
+
+</body>
+</html>

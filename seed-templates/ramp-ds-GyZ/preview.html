@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flowline — Operate with clarity</title>
+<style>
+  :root {
+    --color-background: #FFFFFF;
+    --color-surface: #F3F2EE;
+    --color-primary: #0A0A0A;
+    --color-secondary: #6B6B6B;
+    --color-accent: #D6F23C;
+    --color-text: #111111;
+    --color-text-on-primary: #FFFFFF;
+    --color-text-on-accent: #0A0A0A;
+    --color-border: #E3E2DD;
+    --color-border-strong: #D8D7D1;
+    --color-shadow: rgba(10, 10, 10, 0.08);
+    --color-shadow-soft: rgba(10, 10, 10, 0.05);
+    --color-overlay-dim: rgba(10, 10, 10, 0.35);
+    --color-dot-grid: rgba(10, 10, 10, 0.08);
+    --color-panel-back: #EAE9E4;
+    --color-placeholder-grad-start: #E7E6E1;
+    --color-placeholder-grad-end: #D9D8D2;
+    --color-placeholder-grad-start-2: #111111;
+    --color-placeholder-grad-end-2: #2E2E2E;
+
+    --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+
+    --fs-eyebrow: 11px;
+    --fs-headline: clamp(36px, 7vw, 68px);
+    --fs-subhead: 18px;
+    --fs-nav: 15px;
+    --fs-body: 16px;
+    --fs-small: 13px;
+    --fs-metric: clamp(28px, 4vw, 40px);
+
+    --lh-tight: 1.07;
+    --lh-relaxed: 1.5;
+    --lh-normal: 1.3;
+
+    --tracking-wide: 0.14em;
+    --tracking-normal: normal;
+
+    --radius-sm: 8px;
+    --radius-md: 10px;
+    --radius-lg: 12px;
+
+    --space-2xs: 4px;
+    --space-xs: 8px;
+    --space-sm: 12px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+    --space-2xl: 64px;
+    --space-3xl: 96px;
+
+    --container-max: 1180px;
+    --container-pad: 24px;
+    --container-pad-desktop: 72px;
+
+    --transition-fast: 180ms ease;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    font-family: var(--font-family);
+    background: var(--color-background);
+    color: var(--color-text);
+    line-height: var(--lh-normal);
+    overflow-wrap: anywhere;
+  }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  a { color: inherit; }
+
+  .container {
+    width: 100%;
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding-left: var(--container-pad);
+    padding-right: var(--container-pad);
+  }
+
+  @media (min-width: 834px) {
+    .container { padding-left: var(--container-pad-desktop); padding-right: var(--container-pad-desktop); }
+  }
+
+  .announcement-bar {
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+    text-align: center;
+    font-size: var(--fs-small);
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  .announcement-bar a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    margin-left: var(--space-xs);
+  }
+
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--color-background);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-top: var(--space-md);
+    padding-bottom: var(--space-md);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-weight: 700;
+    font-size: 18px;
+    letter-spacing: var(--tracking-normal);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .logo-mark {
+    width: 24px;
+    height: 24px;
+    border-radius: var(--radius-sm);
+    background: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .nav-links {
+    display: none;
+    align-items: center;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--fs-nav);
+    font-weight: 500;
+    transition: color var(--transition-fast);
+  }
+
+  .nav-links a:hover { color: var(--color-secondary); }
+
+  .chevron {
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid var(--color-secondary);
+    border-bottom: 1.5px solid var(--color-secondary);
+    transform: rotate(45deg);
+    margin-top: -3px;
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+  }
+
+  .nav-link-plain {
+    display: none;
+    font-size: var(--fs-nav);
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-text);
+    white-space: nowrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: var(--radius-md);
+    padding: 10px 20px;
+    font-size: var(--fs-nav);
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: filter var(--transition-fast), transform var(--transition-fast);
+  }
+
+  .btn:hover { filter: brightness(1.08); }
+  .btn:active { transform: translateY(1px); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--color-text);
+    border: 1px solid var(--color-border-strong);
+  }
+
+  .btn-primary {
+    background: var(--color-primary);
+    color: var(--color-text-on-primary);
+  }
+
+  .btn-accent {
+    background: var(--color-accent);
+    color: var(--color-text-on-accent);
+  }
+
+  @media (min-width: 834px) {
+    .nav-links { display: flex; }
+    .nav-link-plain { display: inline-flex; }
+  }
+
+  .hero {
+    padding-top: var(--space-3xl);
+    padding-bottom: var(--space-2xl);
+  }
+
+  .hero-inner {
+    max-width: 760px;
+  }
+
+  .eyebrow {
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--color-secondary);
+    margin: 0 0 var(--space-md);
+  }
+
+  .headline {
+    font-size: var(--fs-headline);
+    line-height: var(--lh-tight);
+    font-weight: 800;
+    letter-spacing: var(--tracking-normal);
+    margin: 0 0 var(--space-lg);
+    color: var(--color-text);
+  }
+
+  .subhead {
+    font-size: var(--fs-subhead);
+    line-height: var(--lh-relaxed);
+    color: var(--color-secondary);
+    font-weight: 400;
+    margin: 0 0 var(--space-xl);
+    max-width: 560px;
+  }
+
+  .hero-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    max-width: 440px;
+  }
+
+  @media (min-width: 560px) {
+    .hero-form {
+      flex-direction: row;
+      align-items: center;
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-md);
+      padding: 6px;
+      background: var(--color-background);
+    }
+    .hero-form input {
+      border: none !important;
+      padding-left: var(--space-md) !important;
+    }
+  }
+
+  .hero-form input {
+    flex: 1;
+    min-width: 0;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    padding: 12px var(--space-md);
+    font-size: var(--fs-body);
+    color: var(--color-text);
+    background: var(--color-background);
+    font-family: inherit;
+  }
+
+  .hero-form input::placeholder { color: var(--color-secondary); }
+
+  .hero-form .btn { flex-shrink: 0; }
+
+  .hero-note {
+    font-size: var(--fs-small);
+    color: var(--color-secondary);
+    margin-top: var(--space-sm);
+  }
+
+  .screenshot-section {
+    padding: var(--space-2xl) 0;
+    background: var(--color-background);
+  }
+
+  .screenshot-backdrop {
+    position: relative;
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl) var(--space-md);
+    background-color: var(--color-surface);
+    background-image:
+      radial-gradient(var(--color-dot-grid) 1px, transparent 1px);
+    background-size: 18px 18px;
+    overflow: hidden;
+  }
+
+  @media (min-width: 834px) {
+    .screenshot-backdrop { padding: var(--space-2xl); }
+  }
+
+  .screenshot-stack {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  .screenshot-back-panel {
+    position: absolute;
+    inset: var(--space-lg) -8px -8px var(--space-lg);
+    background: var(--color-panel-back);
+    border-radius: var(--radius-lg);
+    opacity: 0.7;
+  }
+
+  .browser-card {
+    position: relative;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: 0 24px 48px var(--color-shadow), 0 4px 12px var(--color-shadow-soft);
+    overflow: hidden;
+  }
+
+  .browser-chrome {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: var(--space-sm) var(--space-md);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .browser-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--color-border-strong);
+  }
+
+  .browser-body {
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    background: linear-gradient(135deg, var(--color-placeholder-grad-start), var(--color-placeholder-grad-end));
+  }
+
+  .metrics-bar {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  @media (min-width: 834px) {
+    .metrics-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .metric-item { text-align: left; }
+
+  .metric-value {
+    font-size: var(--fs-metric);
+    font-weight: 800;
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-text);
+    display: block;
+  }
+
+  .metric-label {
+    font-size: var(--fs-small);
+    color: var(--color-secondary);
+    margin-top: var(--space-2xs);
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--color-border);
+    padding: var(--space-xl) 0;
+    background: var(--color-surface);
+  }
+
+  .footer-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  @media (min-width: 834px) {
+    .footer-row { flex-direction: row; align-items: center; }
+  }
+
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer-links a {
+    font-size: var(--fs-small);
+    text-decoration: none;
+    color: var(--color-secondary);
+  }
+
+  .footer-copy {
+    font-size: var(--fs-small);
+    color: var(--color-secondary);
+  }
+
+  .fade-in {
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 500ms ease, transform 500ms ease;
+  }
+
+  .fade-in.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .fade-in { opacity: 1; transform: none; transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<header data-vdna-id="header">
+  <div class="announcement-bar">
+    Now shipping weekly release notes.
+    <a href="#">See what's new</a>
+  </div>
+  <div class="site-header">
+    <nav class="container nav-row" aria-label="Primary">
+      <a href="#" class="logo">
+        <span class="logo-mark" aria-hidden="true"></span>
+        Flowline
+      </a>
+      <ul class="nav-links">
+        <li><a href="#">Product <span class="chevron" aria-hidden="true"></span></a></li>
+        <li><a href="#">Solutions <span class="chevron" aria-hidden="true"></span></a></li>
+        <li><a href="#">Pricing</a></li>
+        <li><a href="#">Docs</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="#" class="nav-link-plain">Sign in</a>
+        <a href="#" class="btn btn-ghost">Contact sales</a>
+        <a href="#" class="btn btn-primary">Get started</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero" data-vdna-id="hero">
+    <div class="container">
+      <div class="hero-inner fade-in" id="hero-copy">
+        <p class="eyebrow">Operations platform</p>
+        <h1 class="headline">Run your operations with total clarity.</h1>
+        <p class="subhead">Flowline brings every metric, workflow, and decision into one calm dashboard, so your team can move fast without losing the signal.</p>
+        <form class="hero-form" onsubmit="return false;">
+          <label for="hero-email" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Work email</label>
+          <input id="hero-email" type="email" placeholder="Enter your work email" autocomplete="email">
+          <button type="submit" class="btn btn-accent">Start free trial</button>
+        </form>
+        <p class="hero-note">No credit card required. 14-day free trial.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="screenshot-section" data-vdna-id="features">
+    <div class="container">
+      <div class="screenshot-backdrop fade-in" id="screenshot-panel">
+        <div class="screenshot-stack">
+          <div class="screenshot-back-panel" aria-hidden="true"></div>
+          <div class="browser-card">
+            <div class="browser-chrome" aria-hidden="true">
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+              <span class="browser-dot"></span>
+            </div>
+            <img
+              class="browser-body"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3C/svg%3E"
+              alt="Flat frontal screenshot of a dashboard interface showing data tables, charts, and a left sidebar navigation, rendered in muted neutral tones with no stylized color cast">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="metrics-bar" data-vdna-id="trust">
+    <div class="container">
+      <div class="metrics-grid">
+        <div class="metric-item">
+          <span class="metric-value">12,400+</span>
+          <p class="metric-label">Teams onboarded</p>
+        </div>
+        <div class="metric-item">
+          <span class="metric-value">99.98%</span>
+          <p class="metric-label">Platform uptime</p>
+        </div>
+        <div class="metric-item">
+          <span class="metric-value">4.2M</span>
+          <p class="metric-label">Workflows run monthly</p>
+        </div>
+        <div class="metric-item">
+          <span class="metric-value">38%</span>
+          <p class="metric-label">Average time saved</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer" data-vdna-id="footer">
+  <div class="container footer-row">
+    <p class="footer-copy">© 2026 Flowline. All rights reserved.</p>
+    <ul class="footer-links">
+      <li><a href="#">Privacy</a></li>
+      <li><a href="#">Terms</a></li>
+      <li><a href="#">Status</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var targets = document.querySelectorAll('.fade-in');
+    if (!('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('is-visible'); });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    targets.forEach(function (el) { observer.observe(el); });
+  })();
+</script>
+
+</body>
+</html>

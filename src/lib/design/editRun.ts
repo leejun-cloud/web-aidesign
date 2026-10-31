@@ -51,7 +51,7 @@ function isFullDocument(text: string): boolean {
 export type Agent = (args: { prompt: string; images?: string[] }) => Promise<string>;
 
 const defaultAgent: Agent = ({ prompt, images }) =>
-  runAgent({ prompt, images, model: "sonnet", timeoutMs: 20 * 60 * 1000 });
+  runAgent({ prompt, images, timeoutMs: 20 * 60 * 1000 });
 
 export interface EditResult {
   version: number;

@@ -1,0 +1,27 @@
+/* design-tokens.css — approved-preview.html 에서 자동 추출
+Font stacks:
+ - var(--font-sans)
+Breakpoints: 834px, 1440px
+   손으로 고치지 말고 승인 HTML 을 고친 뒤 다시 추출하라. */
+:root {
+  --color-background: #F7F7F5;
+  --color-surface: #FFFFFF;
+  --color-primary: #0A0A0A;
+  --color-secondary: #6B6B6B;
+  --color-accent: #FFFFFF;
+  --color-text: #111111;
+  --color-glow-start: rgba(10, 10, 10, 0.08);
+  --color-glow-end: rgba(10, 10, 10, 0);
+  --color-border: rgba(10, 10, 10, 0.12);
+  --color-shape-fill: #0A0A0A;
+  --color-shape-shade: #2B2B2B;
+  --color-logo-fill: #D8D8D4;
+  --space-container-pad: 24px;
+  --space-section-gap: 96px;
+  --space-content-gap: 20px;
+  --space-nav-gap: 32px;
+  --radius-pill: 999px;
+  --radius-none: 0;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --transition-fast: 180ms ease;
+}

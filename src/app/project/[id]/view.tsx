@@ -605,6 +605,25 @@ export default function ProjectView({
         </section>
       )}
 
+      {/* 내보내기 — React 컴포넌트는 순수 변환(배포 환경에서도 동작), PDF 브로슈어는 로컬 전용 */}
+      {version !== null && (
+        <section className="mt-3 flex flex-wrap items-center gap-2 text-sm">
+          <a
+            href={`/api/export/react?projectId=${encodeURIComponent(projectId)}&version=${version}`}
+            className="rounded-lg border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
+          >
+            React 컴포넌트로 내보내기
+          </a>
+          <a
+            href={`/api/export/brochure?projectId=${encodeURIComponent(projectId)}&version=${version}`}
+            className="rounded-lg border border-zinc-200 px-3 py-1.5 text-zinc-700 hover:bg-zinc-100 dark:border-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-900"
+          >
+            PDF 브로슈어로 내보내기
+          </a>
+          <span className="text-xs text-zinc-400">PDF 브로슈어는 로컬 실행 환경에서만 동작합니다</span>
+        </section>
+      )}
+
       {/* 확정 결과 (PRD §21, §22) */}
       {approval && (
         <section className="mt-6 rounded-xl border border-zinc-200 p-4 dark:border-zinc-800">

@@ -87,6 +87,6 @@ export async function analyzeReference(refs: Reference[], opts: AnalyzeOpts): Pr
   return runAgentJson(VisualDna, {
     prompt: buildVisualDnaPrompt(refs, opts),
     images,
-    model: opts.model ?? "sonnet",
+    model: opts.model,
   });
 }

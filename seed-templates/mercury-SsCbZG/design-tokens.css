@@ -1,0 +1,39 @@
+/* design-tokens.css — approved-preview.html 에서 자동 추출
+Font stacks:
+ - -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif
+ - var(--font-family)
+Breakpoints: 834px, 1440px, 540px, 1100px
+   손으로 고치지 말고 승인 HTML 을 고친 뒤 다시 추출하라. */
+:root {
+  --color-background: #0A0A0F;
+  --color-surface: #15151C;
+  --color-primary: #5B6CFF;
+  --color-secondary: #8C8C99;
+  --color-accent: #6C7BFF;
+  --color-text: #F2F2F5;
+  --color-border: rgba(242, 242, 245, 0.1);
+  --color-border-strong: rgba(242, 242, 245, 0.16);
+  --color-surface-translucent: rgba(21, 21, 28, 0.72);
+  --color-header-bg: rgba(10, 10, 15, 0.86);
+  --color-shadow: rgba(91, 108, 255, 0.25);
+  --color-shadow-soft: rgba(0, 0, 0, 0.4);
+  --color-overlay-grad-1: rgba(108, 123, 255, 0.22);
+  --color-overlay-grad-2: rgba(10, 10, 15, 0);
+  --color-photo-sky-1: #3a3650;
+  --color-photo-sky-2: #cf8a6a;
+  --color-photo-sky-3: #efb998;
+  --color-photo-ground: #2a2735;
+  --color-photo-fog: rgba(242, 242, 245, 0.08);
+  --color-focus-ring: #8C8C99;
+  --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --container-max-width: 1400px;
+  --container-padding-desktop: 64px;
+  --container-padding-mobile: 20px;
+  --section-gap: 120px;
+  --card-padding: 32px;
+  --radius-pill: 999px;
+  --radius-card: 20px;
+  --radius-input: 999px;
+  --transition-fast: 0.18s ease;
+  --transition-medium: 0.4s ease;
+}
