@@ -12,7 +12,6 @@ import {
   TEMPLATE_FILES,
   auditTemplateFiles,
 } from "@/lib/design/template";
-import { extractTokens, renderTokensCss } from "@/lib/design/tokens";
 import { COPYRIGHT_GUARD } from "@/lib/design/visualDna";
 import { templatesDir } from "@/lib/store";
 import {
@@ -51,8 +50,13 @@ export interface SaveTemplateArgs {
   shotWriter?: (file: string, viewport: "desktop" | "mobile") => Promise<void>;
 }
 
-/** DESIGN.md 를 AI 없이도 최소 요건으로 채운다 (AI 로 쓴 문서가 있으면 그걸 쓴다) */
-export function fallbackDesignMd(args: { name: string; visualDna: VisualDna; html: string }): string {
+/**
+ * DESIGN.md 를 AI 없이도 최소 요건으로 채운다 (AI 로 쓴 문서가 있으면 그걸 쓴다).
+ * tokens.ts(→jsdom)를 함수 안에서 동적으로 불러온다 — 최상단에서 정적 import 하면
+ * jsdom 의 ESM 서브 의존성 로딩 문제가 이 파일을 쓰는 모든 곳(예: /templates 목록)에 번진다.
+ */
+export async function fallbackDesignMd(args: { name: string; visualDna: VisualDna; html: string }): Promise<string> {
+  const { extractTokens } = await import("@/lib/design/tokens");
   const d = args.visualDna;
   const body: Record<string, string> = {
     "Design Direction": `${args.name} — 분위기: ${d.mood.join(", ")}. hero 구조: ${d.layout.heroStructure}`,
@@ -113,8 +117,12 @@ export async function saveTemplate(args: SaveTemplateArgs): Promise<DesignTempla
 
   const write = (file: string, content: string) => fs.writeFile(path.join(dir, file), content, "utf8");
 
+  const { extractTokens, renderTokensCss } = await import("@/lib/design/tokens");
   await write("preview.html", args.html);
-  await write("DESIGN.md", args.designMd ?? fallbackDesignMd({ name: args.name, visualDna: args.visualDna, html: args.html }));
+  await write(
+    "DESIGN.md",
+    args.designMd ?? (await fallbackDesignMd({ name: args.name, visualDna: args.visualDna, html: args.html })),
+  );
   await write("design-tokens.css", renderTokensCss(extractTokens(args.html)));
   await write("visual-dna.json", JSON.stringify(args.visualDna, null, 2));
   await write("photo-dna.json", JSON.stringify(args.photoDna, null, 2));
